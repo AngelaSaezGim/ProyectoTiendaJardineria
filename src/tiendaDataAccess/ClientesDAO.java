@@ -17,25 +17,29 @@ import tiendaObjetos.Clientes;
  * @author angsaegim
  */
 public class ClientesDAO extends DataAccessObject {
-    
-     ClientesDAO(Connection cnt){
+
+    ClientesDAO(Connection cnt) {
         super(cnt);
     }
-     
-     protected List<Clientes> loadAllClientes() throws SQLException {
-        
-        List<Clientes> clientes = new ArrayList<>();
-        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Clientes");
-        ResultSet result = stmt.executeQuery();
 
-        while(result.next()){
-            clientes.add(readClientesFromResultSet(result));
+    protected List<Clientes> loadAllClientes() throws SQLException {
+
+        List<Clientes> clientes = new ArrayList<>();
+        try ( PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Clientes");  
+                ResultSet result = stmt.executeQuery()) {
+
+            while (result.next()) {
+                Clientes cliente = readClientesFromResultSet(result);
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error al cargar clientes: " + e.getMessage());
         }
         
         return clientes;
     }
-     
-     /**
+
+    /**
      * Lee de un <code>ResultSet</code> un registro de la base de datos. El result set debe contener las columnas de la tabla
      * <code>clientes</code>
      * @param rs ResultSet SQL
@@ -52,12 +56,12 @@ public class ClientesDAO extends DataAccessObject {
      private class ClientesTableColumns{
             
         /**
-         * Nombre de la columna con el identificador del registro
+         * Nombre de la columna con el Codigo del cliente
          */
         private final static String COLUMN_NAME__CLIENTE_CODIGO = "CodigoCliente";
 
         /**
-         * Nombre de la columna que contiene el nombre de la ciudad
+         * Nombre de la columna que contiene el nombre del cliente
          */
         private final static String COLUMN_CLIENTE__NOMBRE = "NombreCliente";
 

@@ -154,26 +154,20 @@ public class DataAccessManager implements AutoCloseable {
             }
         }catch(SQLException sqe){
             System.out.println("Error al cerrar la conexión a datos. " + sqe.getMessage());
-        }
-        finally{
+        } finally {
             singleton = null;
         }
     }
-    
+
     /* FUNCIONES CON DATOS */
-    
-     public List<Clientes> loadAllClientes() throws SQLException{
-        
+    public List<Clientes> loadAllClientes() throws SQLException {
+
         return this.clientesDAO.loadAllClientes();
     }
-     
-     /*
-     public List<Empleados> loadAllEmpleados() throws SQLException{
-        /*
-        return this.empleadosDAO.loadAllEmpleados();
-        
-    }*/
-     
 
-    
+    public List<Empleados> loadAllEmpleados() throws SQLException {
+        return this.empleadosDAO.loadAllEmpleados();
+
+    }
+
 }

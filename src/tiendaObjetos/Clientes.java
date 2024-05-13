@@ -10,7 +10,6 @@ package tiendaObjetos;
  */
 public class Clientes {
 
-    private String cliente;
     private Short codigoCliente;
     private String nombreCliente;
 
@@ -19,23 +18,14 @@ public class Clientes {
         this.setNombreCliente(nombreCliente);
     }
 
-    public final String getCliente() {
-        return cliente;
-    }
-
-    public final void setCliente(String cliente) {
-         if(cliente==null)
-            throw new IllegalArgumentException("No se admite valor nulo");
-        this.cliente = cliente;
-    }
-
     public final Short getCodigoCliente() {
         return codigoCliente;
     }
 
     public final void setCodigoCliente(Short codigoCliente) {
-         if(codigoCliente==null)
+        if (codigoCliente == null) {
             throw new IllegalArgumentException("No se admite valor nulo");
+        }
         this.codigoCliente = codigoCliente;
     }
 
@@ -44,14 +34,15 @@ public class Clientes {
     }
 
     public final void setNombreCliente(String nombreCliente) {
-        if(nombreCliente==null)
+        if (nombreCliente == null) {
             throw new IllegalArgumentException("No se admite valor nulo");
+        }
         this.nombreCliente = nombreCliente;
     }
-    
-     @Override
-    public String toString(){
-        return this.getCliente();
+
+    @Override
+    public String toString() {
+        return "-> Cliente ["+ codigoCliente + "] " + nombreCliente;
     }
-    
+
 }
