@@ -1,0 +1,5 @@
+#Modificar los valores de los parámetros para indicar
+#las credenciales y URL de acceso a la base de datos JARDINERIA de MySQL
+user=root
+pass=
+url=jdbc:mysql://localhost:3306/jardineriaJava
