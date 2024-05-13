@@ -2,21 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package tiendaApp;
+package tiendaDataAccess;
 
-import java.util.Scanner;
+import java.sql.Connection;
 
 /**
  *
  * @author angsaegim
  */
-public class TiendaApp {
+public class ProductosDAO extends DataAccessObject {
     
-    private static Scanner tcl = new Scanner(System.in);
-    
-    public static void main(String[] args) {
-        
-        
+    ProductosDAO(Connection cnt){
+        super(cnt);
     }
     
 }
