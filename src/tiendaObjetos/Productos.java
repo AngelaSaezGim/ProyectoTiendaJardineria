@@ -12,6 +12,32 @@ import tiendaDataAccess.DataAccessObject;
  */
 public class Productos{
     
+    private String codigoProducto;
+    private String nombreProducto;
+
+    public Productos(String codigoProducto, String nombreProducto) {
+        this.setCodigoProducto(codigoProducto);
+        this.setNombreProducto(nombreProducto);
+    }
+
+    public String getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
     
-    
+     @Override
+    public String toString() {
+        return "-> Producto [" + codigoProducto + "] " + nombreProducto ;
+    } 
 }
