@@ -23,12 +23,22 @@ public class TiendaApp {
 
     //Opciones del menú principal
     private enum MenuOption {
-        QUERY_CLIENTES, QUERY_EMPLEADOS,QUERY_PRODUCTOS,EXIT
+        QUERY_ALL,QUERY_BY_CODE,EXIT
+    };
+    
+    private enum MenuOption1 {
+        QUERY_CLIENTES, QUERY_EMPLEADOS,QUERY_PRODUCTOS,ATRAS
+    };
+    
+    private enum MenuOption2 {
+        QUERY_CODE_CLIENTES, QUERY_CODE_EMPLEADOS,QUERY_CODE_PRODUCTOS,ATRAS
     };
 
     public static void main(String[] args) {
 
         MenuOption opcionElegida = null;
+        MenuOption1 opcionElegidaAll=null;
+        MenuOption2 opcionElegidaCode = null;
 
         //instrucción try-con-recurso (el recurso es el objeto DataAccessManager declarado en el paréntesis). 
         // Automáticamente, tras el try-con-recurso, la JDK invoca al método AutoCloseable.close()
@@ -40,14 +50,41 @@ public class TiendaApp {
                 opcionElegida = readChoice();
 
                 switch (opcionElegida) {
-                    case QUERY_CLIENTES:
-                        verClientes(dam);
+                    case QUERY_ALL:
+                        do{
+                        printOptionsAll();
+                        opcionElegidaAll = readChoice1();
+                            switch (opcionElegidaAll) {
+                                case QUERY_CLIENTES:
+                                verClientes(dam);
+                                break;
+                                case QUERY_EMPLEADOS:
+                                verEmpleados(dam);
+                                break;
+                                case QUERY_PRODUCTOS:
+                                verProductos(dam);
+                                break;
+                                case ATRAS:
+                            }
+                        }while(opcionElegidaAll != MenuOption1.ATRAS);
                         break;
-                    case QUERY_EMPLEADOS:
-                        verEmpleados(dam);
-                        break;
-                    case QUERY_PRODUCTOS:
-                        verProductos(dam);
+                    case QUERY_BY_CODE:
+                        do{
+                        printOptionsCode();
+                        opcionElegidaCode = readChoice2();
+                            switch (opcionElegidaCode) {
+                                case QUERY_CODE_CLIENTES:
+                                searchClientesByCode(dam);
+                                break;
+                                case QUERY_CODE_EMPLEADOS:
+                                searchEmpleadosByCode(dam);
+                                break;
+                                case QUERY_CODE_PRODUCTOS:
+                                searchProductosByCode(dam);
+                                break;
+                                case ATRAS:
+                            }
+                        }while(opcionElegidaCode != MenuOption2.ATRAS);
                         break;
                     case EXIT:
                 }
@@ -62,12 +99,12 @@ public class TiendaApp {
     }
 
     //***************************** FUNCIONES LANZADAS DESDE LA ELECCIÓN DEL MENÚ DE LA APLICACIÓN *****************************
-   //VER TODOS LOS CLIENTES
+    //VER TODOS LOS CLIENTES
     private static void verClientes(DataAccessManager dam) throws SQLException {
         List<Clientes> allClientes = dam.loadAllClientes();
         printClientes(allClientes);
     }
-    
+
     //VER TODOS LOS EMPLEADOS
     private static void verEmpleados(DataAccessManager dam) throws SQLException {
         List<Empleados> allEmpleados = dam.loadAllEmpleados();
@@ -81,24 +118,36 @@ public class TiendaApp {
     }
 
     // PONGO UN CODIGO (NUMERO) Y ME DARA EL NOMBRE DEL CLIENTE CORREPONDIENTE A ESE CODIGO
-     private static void verClientesPorCodigo(DataAccessManager dam) throws SQLException {
-         System.out.println("--------------------En desarrollo---------------------");
+    private static void searchClientesByCode(DataAccessManager dam) throws SQLException {
+        String content = requestClientContentLike();
+        List<Clientes> clientesFilteredByCode = dam.loadClientesContaining(content);
+        if (!clientesFilteredByCode.isEmpty()) {
+            printClienteCompleto(clientesFilteredByCode);
+        } else {
+            System.out.println("No se encontraron clientes con el código especificado.");
+        }
     }
-     
-     //AGRUPAR CLIENTES POR PAISES - que salgan los paises de cada cliente (hashMap)
-      private static void paisesClientes(DataAccessManager dam) throws SQLException {
-         System.out.println("--------------------En desarrollo---------------------");
+
+    //BUSCAR EMPLEADOS POR CODIGO
+    private static void searchEmpleadosByCode(DataAccessManager dam) throws SQLException {
+        String content = requestEmpleadoContentLike();
+        List<Empleados> empleadosFilteredByCode = dam.loadEmpleadosContaining(content);
+        if (!empleadosFilteredByCode.isEmpty()) {
+            printEmpleadoCompleto(empleadosFilteredByCode);
+        } else {
+            System.out.println("No se encontraron empleados con el código especificado.");
+        }
     }
-      
-     //CodigoEmpleadoRepVentas - CodigoEmpleados (tabla empleados)
-     //Doy un codigo de empleado - me dará el nombre del empleado enlazado a ese cliente
-      private static void empleadoCliente(DataAccessManager dam) throws SQLException {
-         System.out.println("--------------------En desarrollo---------------------");
-    }
-    
-    //AGRUPAR PRODUCTOS POR GAMA
-    private static void verProductosPorGama(DataAccessManager dam) throws SQLException {
-         System.out.println("--------------------En desarrollo---------------------");
+
+    //BUSCAR PRODUCTOS POR GAMA
+    private static void searchProductosByCode(DataAccessManager dam) throws SQLException {
+         String content = requestProductoContentLike();
+        List<Productos> productosFilteredByCode = dam.loadProductosContaining(content);
+        if (!productosFilteredByCode.isEmpty()) {
+            printProductos(productosFilteredByCode);
+        } else {
+            System.out.println("No se encontraron productos de la gama especificada.");
+        }
     }
 
     //**************** MÉTODOS DE LECTURA DE DATOS VÁLIDOS POR TECLADO ********************
@@ -136,16 +185,59 @@ public class TiendaApp {
             return readChoice();
         }
     }
+    
+        
+    private static MenuOption1 readChoice1() {
+        try {
+            int choiceInt = Integer.valueOf(tcl.nextLine());
+            return MenuOption1.values()[choiceInt - 1];
+        } catch (RuntimeException re) {
+            System.out.println("Opción inválida... Inténtelo otra vez.");
+            return readChoice1();
+        }
+    }
+    
+    private static MenuOption2 readChoice2() {
+        try {
+            int choiceInt = Integer.valueOf(tcl.nextLine());
+            return MenuOption2.values()[choiceInt - 1];
+        } catch (RuntimeException re) {
+            System.out.println("Opción inválida... Inténtelo otra vez.");
+            return readChoice2();
+        }
+    }
 
     //**************** MÉTODOS PRINTEAR ********************
     
     private static void printOptions() {
         StringBuilder sb = new StringBuilder()
                 .append("\n\n\nElija una opción:\n")
-                .append("\t1)Consultar todos los clientes\n")
-                .append("\t2)Consultar todos los Empleados\n")
-                .append("\t3)Consultar todos los productos\n")
-                .append("\t5)Salir\n")
+                .append("\t1)Consultar todos... (clientes, empleados o productos)\n")
+                .append("\t2)Consultar por codigos o gama (clientes, empleados o productos)\n")
+                .append("\t3)Salir\n")
+                .append("\t-) Gestor de clientes (INSERT,UPDATE,DELETE) \n")
+                .append("Opción: ");
+        System.out.print(sb.toString());
+    }
+    
+    private static void printOptionsAll() {
+        StringBuilder sb = new StringBuilder()
+                .append("\n\n\nElija que quieres consultar:\n")
+                .append("\t1)Consultar TODOS los clientes\n")
+                .append("\t2)Consultar TODOS los Empleados\n")
+                .append("\t3)Consultar TODOS los productos\n")
+                .append("\t4)Atrás\n")
+                .append("Opción: ");
+        System.out.print(sb.toString());
+    }
+    
+    private static void printOptionsCode() {
+        StringBuilder sb = new StringBuilder()
+                .append("\n\n\nElija que quieres consultar:\n")
+                .append("\t1)Consultar clientes por codigo\n")
+                .append("\t2)Consultar empleados por codigo\n")
+                .append("\t3)Consultar productos por GAMA\n")
+                .append("\t4)Atrás\n")
                 .append("Opción: ");
         System.out.print(sb.toString());
     }
@@ -161,8 +253,21 @@ public class TiendaApp {
         }
         System.out.println();
     }
-    
-     private static void printEmpleados(List<Empleados> empleados) {
+
+    private static void printClienteCompleto(List<Clientes> clientes) {
+        if (clientes == null || clientes.isEmpty()) {
+            System.out.println("No hay registros...");
+            return;
+        }
+        for (Clientes cliente : clientes) {
+            System.out.println("\t" + cliente);
+            System.out.println("\t Telefono de contacto = " + cliente.getTelefono());
+            System.out.println("\t Pais = " + cliente.getPais());
+            System.out.println("\t Codigo de empleado al que está relacionado = " + cliente.getCodigoClienteEmpleado());
+        }
+    }
+
+    private static void printEmpleados(List<Empleados> empleados) {
         if (empleados == null || empleados.isEmpty()) {
             System.out.println("No hay registros...");
             return;
@@ -173,8 +278,22 @@ public class TiendaApp {
         }
         System.out.println();
     }
-     
-     private static void printProductos(List<Productos> productos) {
+    
+    private static void printEmpleadoCompleto(List<Empleados> empleados) {
+        if (empleados == null || empleados.isEmpty()) {
+            System.out.println("No hay registros...");
+            return;
+        }
+
+        for (Empleados empleado : empleados) {
+            System.out.println("\t" + empleado);
+            System.out.println("\t Nombre Completo = " + empleado.getNombreEmpleado() + " " + empleado.getApellido1() + " " + empleado.getApellido2());
+            System.out.println("\t Email de contacto = " + empleado.getEmail());
+            System.out.println("\t Codigo Oficina = " + empleado.getCodigoOficina());
+        }
+    }
+
+    private static void printProductos(List<Productos> productos) {
         if (productos == null || productos.isEmpty()) {
             System.out.println("No hay registros...");
             return;
@@ -184,5 +303,24 @@ public class TiendaApp {
             System.out.println("\t" + producto);
         }
         System.out.println();
+    }
+    
+
+    private static String requestClientContentLike() {
+        System.out.print("Escriba el codigo del cliente a consultar; ");
+        return readNotEmptyString();
+
+    }
+    
+    private static String requestEmpleadoContentLike() {
+        System.out.print("Escriba el codigo del empleado a consultar; ");
+        return readNotEmptyString();
+
+    }
+    
+    private static String requestProductoContentLike() {
+        System.out.print("Escriba el codigo del producto a consultar; ");
+        return readNotEmptyString();
+
     }
 }

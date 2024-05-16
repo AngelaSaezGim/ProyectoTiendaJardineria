@@ -14,10 +14,12 @@ public class Productos{
     
     private String codigoProducto;
     private String nombreProducto;
+    private String gama;
 
-    public Productos(String codigoProducto, String nombreProducto) {
+    public Productos(String codigoProducto, String nombreProducto, String gama) {
         this.setCodigoProducto(codigoProducto);
         this.setNombreProducto(nombreProducto);
+        this.setGama(gama);
     }
 
     public String getCodigoProducto() {
@@ -36,8 +38,17 @@ public class Productos{
         this.nombreProducto = nombreProducto;
     }
     
+     public String getGama() {
+        return gama;
+    }
+
+    public void setGama(String gama) {
+        this.gama = gama;
+    }
+    
      @Override
     public String toString() {
-        return "-> Producto [" + codigoProducto + "] " + nombreProducto ;
+        return "-> Producto [" + codigoProducto + "] " + nombreProducto + " - " + gama;
     } 
+
 }

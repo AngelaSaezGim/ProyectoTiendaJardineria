@@ -39,20 +39,40 @@ public class EmpleadosDAO extends DataAccessObject {
     }
 
     private static Empleados readEmpleadosFromResultSet(ResultSet rs) throws SQLException {
-        Short codigoEmpleado = rs.getShort(EmpleadosTableColumns.COLUMN_NAME__EMPLEADO_CODIGO);
-        String nombreEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO__NOMBRE);
-        String puestoEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO__PUESTO);
-        Empleados empleado = new Empleados(codigoEmpleado, nombreEmpleado, puestoEmpleado);
+        Short codigoEmpleado = rs.getShort(EmpleadosTableColumns.COLUMN_EMPLEADO_CODIGO);
+        String nombreEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_NOMBRE);
+        String puestoEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_PUESTO);
+        String apellido1 = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_APELLIDO1);
+        String apellido2 = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_APELLIDO2);
+        String email = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_EMAIL);
+        String codigoOficina = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_CODIGO_OFICINA);
+        Empleados empleado = new Empleados(codigoEmpleado, nombreEmpleado, puestoEmpleado, apellido1,apellido2,
+        email,codigoOficina);
         return empleado;
+    }
+    
+    protected List<Empleados> loadEmpleadosContaining(String content) throws SQLException {
+        List<Empleados> empleados = new ArrayList<>();
+
+        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM empleados WHERE CodigoEmpleado LIKE ?");
+        stmt.setString(1, content);
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            empleados.add(readEmpleadosFromResultSet(result));
+        }
+        return empleados;
     }
 
     private class EmpleadosTableColumns {
 
-        private final static String COLUMN_NAME__EMPLEADO_CODIGO = "CodigoEmpleado";
-
-        private final static String COLUMN_EMPLEADO__NOMBRE = "Nombre";
-
-        private final static String COLUMN_EMPLEADO__PUESTO = "Puesto";
+        private final static String COLUMN_EMPLEADO_CODIGO = "CodigoEmpleado";
+        private final static String COLUMN_EMPLEADO_NOMBRE = "Nombre";
+        private final static String COLUMN_EMPLEADO_PUESTO = "Puesto";
+        private final static String COLUMN_EMPLEADO_APELLIDO1 = "Apellido1";
+        private final static String COLUMN_EMPLEADO_APELLIDO2 = "Apellido2";
+        private final static String COLUMN_EMPLEADO_EMAIL = "Email";
+        private final static String COLUMN_EMPLEADO_CODIGO_OFICINA = "CodigoOficina";
 
     }
 }

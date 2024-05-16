@@ -12,10 +12,16 @@ public class Clientes {
 
     private Short codigoCliente;
     private String nombreCliente;
+    private String telefono;
+    private String pais;
+    private Short CodigoClienteEmpleado;
 
-    public Clientes(Short codigoCliente, String nombreCliente) {
+    public Clientes(Short codigoCliente, String nombreCliente, String telefono, String pais, Short CodigoClienteEmpleado) {
         this.setCodigoCliente(codigoCliente);
         this.setNombreCliente(nombreCliente);
+        this.setTelefono(telefono);
+        this.setPais(pais);
+        this.setCodigoClienteEmpleado(CodigoClienteEmpleado);
     }
 
     public final Short getCodigoCliente() {
@@ -39,10 +45,34 @@ public class Clientes {
         }
         this.nombreCliente = nombreCliente;
     }
-
-    @Override
-    public String toString() {
-        return "-> Cliente ["+ codigoCliente + "] " + nombreCliente;
+    
+        public String getTelefono() {
+        return telefono;
     }
 
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public Short getCodigoClienteEmpleado() {
+        return CodigoClienteEmpleado;
+    }
+
+    public void setCodigoClienteEmpleado(Short CodigoClienteEmpleado) {
+        this.CodigoClienteEmpleado = CodigoClienteEmpleado;
+    }
+    
+    @Override
+    public String toString() {
+        return "-> Cliente [" + codigoCliente + "] " + nombreCliente;
+    }
+    
 }

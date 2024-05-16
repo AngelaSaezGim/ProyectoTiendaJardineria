@@ -22,11 +22,21 @@ public class ClientesDAO extends DataAccessObject {
         super(cnt);
     }
 
+    private static Clientes readClientesFromResultSet(ResultSet rs) throws SQLException {
+        Short codigoCliente = rs.getShort(ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO);
+        String nombreCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_NOMBRE);
+        String telefonoCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_TELEFONO);
+        String pais = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_PAIS);
+        Short CodigoEmpleadoCliente = rs.getShort(ClientesTableColumns.COLUMN_CLIENTE_EMPLEADO);
+        Clientes cliente = new Clientes(codigoCliente, nombreCliente, telefonoCliente,pais,CodigoEmpleadoCliente);
+        return cliente;
+    }
+
+
     protected List<Clientes> loadAllClientes() throws SQLException {
 
         List<Clientes> clientes = new ArrayList<>();
-        try ( PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Clientes");  
-                ResultSet result = stmt.executeQuery()) {
+        try ( PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Clientes");  ResultSet result = stmt.executeQuery()) {
 
             while (result.next()) {
                 Clientes cliente = readClientesFromResultSet(result);
@@ -35,36 +45,31 @@ public class ClientesDAO extends DataAccessObject {
         } catch (SQLException e) {
             throw new SQLException("Error al cargar clientes: " + e.getMessage());
         }
-        
+
         return clientes;
     }
 
-    /**
-     * Lee de un <code>ResultSet</code> un registro de la base de datos. El result set debe contener las columnas de la tabla
-     * <code>clientes</code>
-     * @param rs ResultSet SQL
-     * @return Un cleinte con los datos del registro actual del result set
-     * @throws SQLException Si ocurre algún error SQL
-     */
-    private static Clientes readClientesFromResultSet(ResultSet rs) throws SQLException{
-        Short codigoCliente = rs.getShort(ClientesTableColumns.COLUMN_NAME__CLIENTE_CODIGO);
-        String nombreCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE__NOMBRE);
-        Clientes cliente = new Clientes(codigoCliente, nombreCliente);
-        return cliente;
-    }
-    
-     private class ClientesTableColumns{
-            
-        /**
-         * Nombre de la columna con el Codigo del cliente
-         */
-        private final static String COLUMN_NAME__CLIENTE_CODIGO = "CodigoCliente";
+    protected List<Clientes> loadClientesContaining(String content) throws SQLException {
 
-        /**
-         * Nombre de la columna que contiene el nombre del cliente
-         */
-        private final static String COLUMN_CLIENTE__NOMBRE = "NombreCliente";
+        List<Clientes> clientes = new ArrayList<>();
 
+        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM clientes WHERE CodigoCliente LIKE ?");
+        stmt.setString(1, content);
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            clientes.add(readClientesFromResultSet(result));
+        }
+        return clientes;
     }
-    
+
+    private class ClientesTableColumns {
+
+        private final static String COLUMN_NAME_CLIENTE_CODIGO = "CodigoCliente";
+        private final static String COLUMN_CLIENTE_NOMBRE = "NombreCliente";
+        private final static String COLUMN_CLIENTE_TELEFONO = "Telefono";
+        private final static String COLUMN_CLIENTE_PAIS = "Pais";
+        private final static String COLUMN_CLIENTE_EMPLEADO = "CodigoEmpleadoRepVentas";
+    }
+
 }

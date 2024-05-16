@@ -179,5 +179,26 @@ public class DataAccessManager implements AutoCloseable {
         return this.productosDAO.loadAllProductos();
 
     }
+    
+    public List<Clientes> loadClientesContaining(String content) throws SQLException {
+        if(content==null || content.length()==0)
+            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+        
+        return this.clientesDAO.loadClientesContaining(content);
+    }
+    
+     public List<Empleados> loadEmpleadosContaining(String content) throws SQLException {
+        if(content==null || content.length()==0)
+            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+        
+        return this.empleadosDAO.loadEmpleadosContaining(content);
+    }
+     
+      public List<Productos> loadProductosContaining(String content) throws SQLException {
+        if(content==null || content.length()==0)
+            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+        
+        return this.productosDAO.loadProductosContaining(content);
+    }
 
 }

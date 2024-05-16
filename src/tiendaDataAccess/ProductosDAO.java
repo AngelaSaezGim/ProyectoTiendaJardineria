@@ -41,15 +41,30 @@ public class ProductosDAO extends DataAccessObject {
      private static Productos readProductosFromResultSet(ResultSet rs) throws SQLException{
         String codigoProducto = rs.getString(ProductosTableColumns.COLUMN_NAME_PRODUCTO_CODIGO);
         String nombreProducto = rs.getString(ProductosTableColumns.COLUMN_PRODUCTO_NOMBRE);
-        Productos producto = new Productos(codigoProducto, nombreProducto);
+        String gamaProducto = rs.getString(ProductosTableColumns.COLUMN_PRODUCTO_GAMA);
+        Productos producto = new Productos(codigoProducto, nombreProducto, gamaProducto);
         return producto;
+    }
+     
+      protected List<Productos> loadProductosContaining(String content) throws SQLException {
+
+        List<Productos> productos = new ArrayList<>();
+
+        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM productos WHERE Gama LIKE ?");
+        stmt.setString(1, content);
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            productos.add(readProductosFromResultSet(result));
+        }
+        return productos;
     }
      
      private class ProductosTableColumns{
             
         private final static String COLUMN_NAME_PRODUCTO_CODIGO = "CodigoProducto";
-
         private final static String COLUMN_PRODUCTO_NOMBRE = "Nombre";
+        private final static String COLUMN_PRODUCTO_GAMA = "Gama";
     }
     
 }
