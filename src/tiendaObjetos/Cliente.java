@@ -13,16 +13,33 @@ public class Cliente {
     private Short codigoCliente;
     private String nombreCliente;
     private String telefono;
+    private String fax;
+    private String lineaDireccion1;
+    private String ciudad;
     private String pais;
     private Short CodigoClienteEmpleado;
 
-    public Cliente(Short codigoCliente, String nombreCliente, String telefono, String pais, Short CodigoClienteEmpleado) {
+    public Cliente(Short codigoCliente, String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad , String pais, Short CodigoClienteEmpleado) {
         this.setCodigoCliente(codigoCliente);
         this.setNombreCliente(nombreCliente);
         this.setTelefono(telefono);
+        this.setFax(fax);
+        this.setLineaDireccion1(lineaDireccion1);
+         this.setCiudad(ciudad);
         this.setPais(pais);
         this.setCodigoClienteEmpleado(CodigoClienteEmpleado);
     }
+    public Cliente( String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad , String pais, Short CodigoClienteEmpleado) {
+        this.setCodigoCliente(codigoCliente);
+        this.setNombreCliente(nombreCliente);
+        this.setTelefono(telefono);
+        this.setFax(fax);
+        this.setLineaDireccion1(lineaDireccion1);
+         this.setCiudad(ciudad);
+        this.setPais(pais);
+        this.setCodigoClienteEmpleado(CodigoClienteEmpleado);
+    }
+    
 
     public final Short getCodigoCliente() {
         return codigoCliente;
@@ -45,13 +62,38 @@ public class Cliente {
         }
         this.nombreCliente = nombreCliente;
     }
-    
-        public String getTelefono() {
+
+    public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+    
+    
+    public String getLineaDireccion1() {
+        return lineaDireccion1;
+    }
+
+    public void setLineaDireccion1(String lineaDireccion1) {
+        this.lineaDireccion1 = lineaDireccion1;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     public String getPais() {

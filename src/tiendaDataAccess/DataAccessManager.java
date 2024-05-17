@@ -179,26 +179,49 @@ public class DataAccessManager implements AutoCloseable {
         return this.productosDAO.loadAllProductos();
 
     }
-    
+
     public List<Cliente> loadClientesContaining(String content) throws SQLException {
-        if(content==null || content.length()==0)
+        if (content == null || content.length() == 0) {
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
-        
+        }
+
         return this.clientesDAO.loadClientesContaining(content);
     }
-    
-     public List<Empleado> loadEmpleadosContaining(String content) throws SQLException {
-        if(content==null || content.length()==0)
+
+    public List<Empleado> loadEmpleadosContaining(String content) throws SQLException {
+        if (content == null || content.length() == 0) {
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
-        
+        }
+
         return this.empleadosDAO.loadEmpleadosContaining(content);
     }
-     
-      public List<Producto> loadProductosContaining(String content) throws SQLException {
-        if(content==null || content.length()==0)
+
+    public List<Producto> loadProductosContaining(String content) throws SQLException {
+        if (content == null || content.length() == 0) {
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
-        
+        }
+
         return this.productosDAO.loadProductosContaining(content);
+    }
+
+    public int deleteClient(String content) throws SQLException {
+        if (content == null || content.length() == 0) {
+            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+        }
+
+        return this.clientesDAO.deleteClient(content);
+    }
+
+    public void insertarCliente(Cliente cliente) throws SQLException {
+        this.clientesDAO.insertClient(cliente);
+    }
+
+    public int updateClient(String content) throws SQLException {
+        if (content == null || content.length() == 0) {
+            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+        }
+
+        return this.clientesDAO.updateClient(content);
     }
 
 }

@@ -26,12 +26,14 @@ public class ClienteDAO extends DataAccessObject {
         Short codigoCliente = rs.getShort(ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO);
         String nombreCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_NOMBRE);
         String telefonoCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_TELEFONO);
+        String faxCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_TELEFONO);
+        String lineaDireccion1 = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_LINEADIRECCION1);
+        String ciudadCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_CIUDAD);
         String pais = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_PAIS);
         Short CodigoEmpleadoCliente = rs.getShort(ClientesTableColumns.COLUMN_CLIENTE_EMPLEADO);
-        Cliente cliente = new Cliente(codigoCliente, nombreCliente, telefonoCliente,pais,CodigoEmpleadoCliente);
+        Cliente cliente = new Cliente(codigoCliente, nombreCliente, telefonoCliente, faxCliente, lineaDireccion1, ciudadCliente, pais, CodigoEmpleadoCliente);
         return cliente;
     }
-
 
     protected List<Cliente> loadAllClientes() throws SQLException {
 
@@ -49,12 +51,12 @@ public class ClienteDAO extends DataAccessObject {
         return clientes;
     }
 
-    protected List<Cliente> loadClientesContaining(String content) throws SQLException {
+    protected List<Cliente> loadClientesContaining(String codigoCliente) throws SQLException {
 
         List<Cliente> clientes = new ArrayList<>();
 
-        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM clientes WHERE CodigoCliente LIKE ?");
-        stmt.setString(1, content);
+        PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM clientes WHERE CodigoCliente = ?");
+        stmt.setString(1, codigoCliente);
         ResultSet result = stmt.executeQuery();
 
         while (result.next()) {
@@ -63,11 +65,87 @@ public class ClienteDAO extends DataAccessObject {
         return clientes;
     }
 
+    protected int deleteClient(String codigoCliente) throws SQLException {
+
+        int filasAfectadas = 0;
+
+        try ( PreparedStatement stmt = cnt.prepareStatement("DELETE FROM Clientes WHERE CodigoCliente = ?")) {
+            stmt.setString(1, codigoCliente);
+            // NO USAR executeQuery
+            // NO USAR resultSet
+            // USAR executeUpdate();
+            filasAfectadas = stmt.executeUpdate();
+        }
+
+        // DEVUELVE LAS FILAS AFECTADAS por la eliminación
+        return filasAfectadas;
+    }
+
+    protected void insertClient(Cliente cliente) throws SQLException {
+
+        String sentenciaSQL = "INSERT INTO clientes ("
+                + ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_NOMBRE + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_TELEFONO + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_FAX + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_LINEADIRECCION1 + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_CIUDAD + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_PAIS + ", "
+                + ClientesTableColumns.COLUMN_CLIENTE_EMPLEADO
+                + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement stmt = cnt.prepareStatement(sentenciaSQL)) {
+
+            /*
+            stmt.setShort(1, obtenerMaxId() + 1);*/
+            stmt.setString(2, cliente.getNombreCliente());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setString(4, cliente.getFax());
+            stmt.setString(5, cliente.getLineaDireccion1());
+            stmt.setString(6, cliente.getCiudad());
+            stmt.setString(7, cliente.getPais());
+            stmt.setShort(8, cliente.getCodigoClienteEmpleado());
+
+            stmt.executeUpdate();
+        }
+    }
+    
+    
+    
+
+    private Integer obtenerMaxId() throws SQLException{
+        
+        PreparedStatement stmt = cnt.prepareStatement("SELECT max(CodigoCliente) FROM clientes");
+        ResultSet result = stmt.executeQuery();
+        
+        if(result.next()){
+            return result.getInt(1);
+        }
+        else{
+            return 0; //no hay datos en la tablaa
+        }
+    }
+    
+    protected int updateClient(String codigoCliente) throws SQLException {
+
+        int filasAfectadas = 0;
+
+        try ( PreparedStatement stmt = cnt.prepareStatement("UPDATE Clientes SET NombreCliente=? WHERE CodigoCliente = ?")) {
+            stmt.setString(1, codigoCliente);
+            filasAfectadas = stmt.executeUpdate();
+        }
+
+        // DEVUELVE LAS FILAS AFECTADAS por la actualización
+        return filasAfectadas;
+    }
+
     private class ClientesTableColumns {
 
         private final static String COLUMN_NAME_CLIENTE_CODIGO = "CodigoCliente";
         private final static String COLUMN_CLIENTE_NOMBRE = "NombreCliente";
         private final static String COLUMN_CLIENTE_TELEFONO = "Telefono";
+        private final static String COLUMN_CLIENTE_FAX = "Fax";
+        private final static String COLUMN_CLIENTE_LINEADIRECCION1 = "LineaDireccion1";
+        private final static String COLUMN_CLIENTE_CIUDAD = "Ciudad";
         private final static String COLUMN_CLIENTE_PAIS = "Pais";
         private final static String COLUMN_CLIENTE_EMPLEADO = "CodigoEmpleadoRepVentas";
     }
