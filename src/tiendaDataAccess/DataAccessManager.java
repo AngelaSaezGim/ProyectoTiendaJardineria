@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 import static tiendaDataAccess.Constants.*;
-import tiendaObjetos.Empleados;
-import tiendaObjetos.Productos;
-import tiendaObjetos.Clientes;
+import tiendaObjetos.Empleado;
+import tiendaObjetos.Producto;
+import tiendaObjetos.Cliente;
 
 /**
  *
@@ -50,9 +50,9 @@ public class DataAccessManager implements AutoCloseable {
             singleton = new DataAccessManager();
             try {
                 singleton.cnx = createConnection();
-                singleton.clientesDAO = new ClientesDAO(singleton.cnx);
-                singleton.empleadosDAO = new EmpleadosDAO(singleton.cnx);
-                singleton.productosDAO = new ProductosDAO(singleton.cnx);
+                singleton.clientesDAO = new ClienteDAO(singleton.cnx);
+                singleton.empleadosDAO = new EmpleadoDAO(singleton.cnx);
+                singleton.productosDAO = new ProductoDAO(singleton.cnx);
             } catch (Exception e) {
                 singleton = null;
                 throw new RuntimeException(e);
@@ -117,9 +117,9 @@ public class DataAccessManager implements AutoCloseable {
     //para conectar y ejecutar las SQL en la bbdd
     private Connection cnx;
 
-    private EmpleadosDAO empleadosDAO;
-    private ClientesDAO clientesDAO;
-    private ProductosDAO productosDAO;
+    private EmpleadoDAO empleadosDAO;
+    private ClienteDAO clientesDAO;
+    private ProductoDAO productosDAO;
 
     private static Connection createConnection() {
 
@@ -165,36 +165,36 @@ public class DataAccessManager implements AutoCloseable {
 
     /* FUNCIONES CON DATOS */
  /*VER TODOS LOS..*/
-    public List<Clientes> loadAllClientes() throws SQLException {
+    public List<Cliente> loadAllClientes() throws SQLException {
 
         return this.clientesDAO.loadAllClientes();
     }
 
-    public List<Empleados> loadAllEmpleados() throws SQLException {
+    public List<Empleado> loadAllEmpleados() throws SQLException {
         return this.empleadosDAO.loadAllEmpleados();
 
     }
 
-    public List<Productos> loadAllProductos() throws SQLException {
+    public List<Producto> loadAllProductos() throws SQLException {
         return this.productosDAO.loadAllProductos();
 
     }
     
-    public List<Clientes> loadClientesContaining(String content) throws SQLException {
+    public List<Cliente> loadClientesContaining(String content) throws SQLException {
         if(content==null || content.length()==0)
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
         
         return this.clientesDAO.loadClientesContaining(content);
     }
     
-     public List<Empleados> loadEmpleadosContaining(String content) throws SQLException {
+     public List<Empleado> loadEmpleadosContaining(String content) throws SQLException {
         if(content==null || content.length()==0)
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
         
         return this.empleadosDAO.loadEmpleadosContaining(content);
     }
      
-      public List<Productos> loadProductosContaining(String content) throws SQLException {
+      public List<Producto> loadProductosContaining(String content) throws SQLException {
         if(content==null || content.length()==0)
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
         

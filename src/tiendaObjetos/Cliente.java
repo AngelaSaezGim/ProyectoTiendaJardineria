@@ -8,7 +8,7 @@ package tiendaObjetos;
  *
  * @author angsaegim
  */
-public class Clientes {
+public class Cliente {
 
     private Short codigoCliente;
     private String nombreCliente;
@@ -16,7 +16,7 @@ public class Clientes {
     private String pais;
     private Short CodigoClienteEmpleado;
 
-    public Clientes(Short codigoCliente, String nombreCliente, String telefono, String pais, Short CodigoClienteEmpleado) {
+    public Cliente(Short codigoCliente, String nombreCliente, String telefono, String pais, Short CodigoClienteEmpleado) {
         this.setCodigoCliente(codigoCliente);
         this.setNombreCliente(nombreCliente);
         this.setTelefono(telefono);

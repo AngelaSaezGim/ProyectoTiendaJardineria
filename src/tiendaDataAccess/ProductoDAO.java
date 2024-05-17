@@ -10,26 +10,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tiendaObjetos.Productos;
+import tiendaObjetos.Producto;
 
 /**
  *
  * @author angsaegim
  */
-public class ProductosDAO extends DataAccessObject {
+public class ProductoDAO extends DataAccessObject {
     
-    ProductosDAO(Connection cnt){
+    ProductoDAO(Connection cnt){
         super(cnt);
     }
     
-      protected List<Productos> loadAllProductos() throws SQLException {
+      protected List<Producto> loadAllProductos() throws SQLException {
 
-        List<Productos> productos = new ArrayList<>();
+        List<Producto> productos = new ArrayList<>();
         try ( PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Productos");  
                 ResultSet result = stmt.executeQuery()) {
 
             while (result.next()) {
-                Productos producto = readProductosFromResultSet(result);
+                Producto producto = readProductosFromResultSet(result);
                 productos.add(producto);
             }
         } catch (SQLException e) {
@@ -38,17 +38,17 @@ public class ProductosDAO extends DataAccessObject {
         return productos;
     }
      
-     private static Productos readProductosFromResultSet(ResultSet rs) throws SQLException{
+     private static Producto readProductosFromResultSet(ResultSet rs) throws SQLException{
         String codigoProducto = rs.getString(ProductosTableColumns.COLUMN_NAME_PRODUCTO_CODIGO);
         String nombreProducto = rs.getString(ProductosTableColumns.COLUMN_PRODUCTO_NOMBRE);
         String gamaProducto = rs.getString(ProductosTableColumns.COLUMN_PRODUCTO_GAMA);
-        Productos producto = new Productos(codigoProducto, nombreProducto, gamaProducto);
+        Producto producto = new Producto(codigoProducto, nombreProducto, gamaProducto);
         return producto;
     }
      
-      protected List<Productos> loadProductosContaining(String content) throws SQLException {
+      protected List<Producto> loadProductosContaining(String content) throws SQLException {
 
-        List<Productos> productos = new ArrayList<>();
+        List<Producto> productos = new ArrayList<>();
 
         PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM productos WHERE Gama LIKE ?");
         stmt.setString(1, content);

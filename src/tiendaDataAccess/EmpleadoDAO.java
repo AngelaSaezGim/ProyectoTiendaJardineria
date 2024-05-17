@@ -10,26 +10,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tiendaObjetos.Clientes;
-import tiendaObjetos.Empleados;
+import tiendaObjetos.Cliente;
+import tiendaObjetos.Empleado;
 
 /**
  *
  * @author angsaegim
  */
-public class EmpleadosDAO extends DataAccessObject {
+public class EmpleadoDAO extends DataAccessObject {
 
-    EmpleadosDAO(Connection cnt) {
+    EmpleadoDAO(Connection cnt) {
         super(cnt);
     }
 
-    protected List<Empleados> loadAllEmpleados() throws SQLException {
+    protected List<Empleado> loadAllEmpleados() throws SQLException {
 
-        List<Empleados> empleados = new ArrayList<>();
+        List<Empleado> empleados = new ArrayList<>();
         try ( PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM Empleados");  ResultSet result = stmt.executeQuery()) {
 
             while (result.next()) {
-                Empleados empleado = readEmpleadosFromResultSet(result);
+                Empleado empleado = readEmpleadosFromResultSet(result);
                 empleados.add(empleado);
             }
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class EmpleadosDAO extends DataAccessObject {
         return empleados;
     }
 
-    private static Empleados readEmpleadosFromResultSet(ResultSet rs) throws SQLException {
+    private static Empleado readEmpleadosFromResultSet(ResultSet rs) throws SQLException {
         Short codigoEmpleado = rs.getShort(EmpleadosTableColumns.COLUMN_EMPLEADO_CODIGO);
         String nombreEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_NOMBRE);
         String puestoEmpleado = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_PUESTO);
@@ -46,13 +46,13 @@ public class EmpleadosDAO extends DataAccessObject {
         String apellido2 = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_APELLIDO2);
         String email = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_EMAIL);
         String codigoOficina = rs.getString(EmpleadosTableColumns.COLUMN_EMPLEADO_CODIGO_OFICINA);
-        Empleados empleado = new Empleados(codigoEmpleado, nombreEmpleado, puestoEmpleado, apellido1,apellido2,
+        Empleado empleado = new Empleado(codigoEmpleado, nombreEmpleado, puestoEmpleado, apellido1,apellido2,
         email,codigoOficina);
         return empleado;
     }
     
-    protected List<Empleados> loadEmpleadosContaining(String content) throws SQLException {
-        List<Empleados> empleados = new ArrayList<>();
+    protected List<Empleado> loadEmpleadosContaining(String content) throws SQLException {
+        List<Empleado> empleados = new ArrayList<>();
 
         PreparedStatement stmt = cnt.prepareStatement("SELECT * FROM empleados WHERE CodigoEmpleado LIKE ?");
         stmt.setString(1, content);

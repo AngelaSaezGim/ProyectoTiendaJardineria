@@ -10,13 +10,13 @@ import tiendaDataAccess.DataAccessObject;
  *
  * @author angsaegim
  */
-public class Productos{
+public class Producto{
     
     private String codigoProducto;
     private String nombreProducto;
     private String gama;
 
-    public Productos(String codigoProducto, String nombreProducto, String gama) {
+    public Producto(String codigoProducto, String nombreProducto, String gama) {
         this.setCodigoProducto(codigoProducto);
         this.setNombreProducto(nombreProducto);
         this.setGama(gama);
