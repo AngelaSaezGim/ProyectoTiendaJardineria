@@ -105,7 +105,7 @@ public class TiendaApp {
         } catch (SQLException sqe) {
             System.out.println("Error de acceso a datos: " + sqe.getMessage());
         }
-        System.out.println("\n\n  ADIOS ! \n\n");
+        System.out.println("\n\n  ADIOS !!!! \n\n");
         tcl.close();
     }
 
