@@ -23,7 +23,7 @@ public class ClienteDAO extends DataAccessObject {
     }
 
     private static Cliente readClientesFromResultSet(ResultSet rs) throws SQLException {
-        Short codigoCliente = rs.getShort(ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO);
+        int codigoCliente = rs.getInt(ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO);
         String nombreCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_NOMBRE);
         String telefonoCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_TELEFONO);
         String faxCliente = rs.getString(ClientesTableColumns.COLUMN_CLIENTE_TELEFONO);
@@ -51,7 +51,7 @@ public class ClienteDAO extends DataAccessObject {
         return clientes;
     }
 
-    protected List<Cliente> loadClientesContaining(String codigoCliente) throws SQLException {
+    protected Cliente loadClientesByCode(String codigoCliente) throws SQLException {
 
         List<Cliente> clientes = new ArrayList<>();
 
@@ -59,10 +59,10 @@ public class ClienteDAO extends DataAccessObject {
         stmt.setString(1, codigoCliente);
         ResultSet result = stmt.executeQuery();
 
-        while (result.next()) {
-            clientes.add(readClientesFromResultSet(result));
+        if (result.next()) {
+            return readClientesFromResultSet(result);        
         }
-        return clientes;
+        return null;
     }
 
     protected int deleteClient(String codigoCliente) throws SQLException {
@@ -81,8 +81,7 @@ public class ClienteDAO extends DataAccessObject {
         return filasAfectadas;
     }
 
-    protected void insertClient(Cliente cliente) throws SQLException {
-
+    protected void insertClient(Cliente cliente) throws SQLException {        
         String sentenciaSQL = "INSERT INTO clientes ("
                 + ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO + ", "
                 + ClientesTableColumns.COLUMN_CLIENTE_NOMBRE + ", "
@@ -95,8 +94,8 @@ public class ClienteDAO extends DataAccessObject {
                 + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement stmt = cnt.prepareStatement(sentenciaSQL)) {
 
-            /*
-            stmt.setShort(1, obtenerMaxId() + 1);*/
+            int codCliente = obtenerMaxId() + 1;
+            stmt.setInt(1, codCliente);
             stmt.setString(2, cliente.getNombreCliente());
             stmt.setString(3, cliente.getTelefono());
             stmt.setString(4, cliente.getFax());
@@ -106,34 +105,42 @@ public class ClienteDAO extends DataAccessObject {
             stmt.setShort(8, cliente.getCodigoClienteEmpleado());
 
             stmt.executeUpdate();
+            
+            cliente.setCodigoCliente(codCliente);
         }
     }
-    
-    
-    
 
-    private Integer obtenerMaxId() throws SQLException{
-        
+    private Integer obtenerMaxId() throws SQLException {
+
         PreparedStatement stmt = cnt.prepareStatement("SELECT max(CodigoCliente) FROM clientes");
         ResultSet result = stmt.executeQuery();
-        
-        if(result.next()){
+
+        if (result.next()) {
             return result.getInt(1);
-        }
-        else{
-            return 0; //no hay datos en la tablaa
+        } else {
+            return 0; //no hay datos en la tabla
         }
     }
-    
-    protected int updateClient(String codigoCliente) throws SQLException {
+
+    //Recibir cliente - un solo prepareStatenent
+    protected int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {
 
         int filasAfectadas = 0;
 
-        try ( PreparedStatement stmt = cnt.prepareStatement("UPDATE Clientes SET NombreCliente=? WHERE CodigoCliente = ?")) {
-            stmt.setString(1, codigoCliente);
+        try ( PreparedStatement stmt = cnt.prepareStatement("UPDATE Clientes "
+                + "SET NombreCliente=?,"
+                + "SET Telefono=?,"
+                + "SET Pais=?,"
+                + "SET CodigoEmpleadoRepVentas=?,"
+                + " WHERE CodigoCliente = ?")) {
+            stmt.setString(1, clienteActualizar.getNombreCliente());
+            stmt.setString(2, clienteActualizar.getTelefono());
+            stmt.setString(3, clienteActualizar.getPais());
+            stmt.setShort(4, clienteActualizar.getCodigoClienteEmpleado());
+            stmt.setString(5, codigoCliente);
+            
             filasAfectadas = stmt.executeUpdate();
         }
-
         // DEVUELVE LAS FILAS AFECTADAS por la actualización
         return filasAfectadas;
     }

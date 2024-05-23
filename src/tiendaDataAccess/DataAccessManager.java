@@ -165,6 +165,7 @@ public class DataAccessManager implements AutoCloseable {
 
     /* FUNCIONES CON DATOS */
  /*VER TODOS LOS..*/
+    // AREGLAR LO DE CONTENT - VARIABLES MAS DESCRIPTIVAS 
     public List<Cliente> loadAllClientes() throws SQLException {
 
         return this.clientesDAO.loadAllClientes();
@@ -180,12 +181,12 @@ public class DataAccessManager implements AutoCloseable {
 
     }
 
-    public List<Cliente> loadClientesContaining(String content) throws SQLException {
+    public Cliente loadClientesByCode(String content) throws SQLException {
         if (content == null || content.length() == 0) {
             throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
         }
 
-        return this.clientesDAO.loadClientesContaining(content);
+        return this.clientesDAO.loadClientesByCode(content);
     }
 
     public List<Empleado> loadEmpleadosContaining(String content) throws SQLException {
@@ -216,12 +217,11 @@ public class DataAccessManager implements AutoCloseable {
         this.clientesDAO.insertClient(cliente);
     }
 
-    public int updateClient(String content) throws SQLException {
-        if (content == null || content.length() == 0) {
-            throw new IllegalArgumentException("Debe indicar el filtro de búsqueda");
+    public int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {
+        if (codigoCliente == null || clienteActualizar == null) {
+            throw new IllegalArgumentException("El código del cliente y el cliente a actualizar no deben ser nulos.");
         }
-
-        return this.clientesDAO.updateClient(content);
+        return this.clientesDAO.updateClient(codigoCliente, clienteActualizar);
     }
 
 }

@@ -10,7 +10,7 @@ package tiendaObjetos;
  */
 public class Cliente {
 
-    private Short codigoCliente;
+    private int codigoCliente;
     private String nombreCliente;
     private String telefono;
     private String fax;
@@ -19,36 +19,36 @@ public class Cliente {
     private String pais;
     private Short CodigoClienteEmpleado;
 
-    public Cliente(Short codigoCliente, String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad , String pais, Short CodigoClienteEmpleado) {
+    public Cliente(int codigoCliente, String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad, String pais, Short CodigoClienteEmpleado) {
         this.setCodigoCliente(codigoCliente);
         this.setNombreCliente(nombreCliente);
         this.setTelefono(telefono);
         this.setFax(fax);
         this.setLineaDireccion1(lineaDireccion1);
-         this.setCiudad(ciudad);
+        this.setCiudad(ciudad);
         this.setPais(pais);
         this.setCodigoClienteEmpleado(CodigoClienteEmpleado);
     }
-    public Cliente( String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad , String pais, Short CodigoClienteEmpleado) {
+
+    public Cliente(String nombreCliente, String telefono, String fax, String lineaDireccion1, String ciudad, String pais, Short CodigoClienteEmpleado) {
         this.setCodigoCliente(codigoCliente);
         this.setNombreCliente(nombreCliente);
         this.setTelefono(telefono);
         this.setFax(fax);
         this.setLineaDireccion1(lineaDireccion1);
-         this.setCiudad(ciudad);
+        this.setCiudad(ciudad);
         this.setPais(pais);
         this.setCodigoClienteEmpleado(CodigoClienteEmpleado);
     }
     
+    public Cliente(int CodigoCliente) {
+    }
 
-    public final Short getCodigoCliente() {
+    public final int getCodigoCliente() {
         return codigoCliente;
     }
 
-    public final void setCodigoCliente(Short codigoCliente) {
-        if (codigoCliente == null) {
-            throw new IllegalArgumentException("No se admite valor nulo");
-        }
+    public final void setCodigoCliente(int codigoCliente) {
         this.codigoCliente = codigoCliente;
     }
 
@@ -57,9 +57,6 @@ public class Cliente {
     }
 
     public final void setNombreCliente(String nombreCliente) {
-        if (nombreCliente == null) {
-            throw new IllegalArgumentException("No se admite valor nulo");
-        }
         this.nombreCliente = nombreCliente;
     }
 
@@ -78,8 +75,7 @@ public class Cliente {
     public void setFax(String fax) {
         this.fax = fax;
     }
-    
-    
+
     public String getLineaDireccion1() {
         return lineaDireccion1;
     }
@@ -111,10 +107,10 @@ public class Cliente {
     public void setCodigoClienteEmpleado(Short CodigoClienteEmpleado) {
         this.CodigoClienteEmpleado = CodigoClienteEmpleado;
     }
-    
+
     @Override
     public String toString() {
         return "-> Cliente [" + codigoCliente + "] " + nombreCliente;
     }
-    
+
 }

@@ -23,7 +23,7 @@ public class TiendaApp {
 
     //Opciones del menú principal
     private enum MenuOption {
-        QUERY_ALL, QUERY_BY_CODE, QUERY_CLIENTES_DELETE, QUERY_CLIENTES_INSERT, QUERY_CLIENTES_UPDATE, EXIT
+        QUERY_ALL, QUERY_BY_CODE, QUERY_CLIENTES_INSERT, QUERY_CLIENTES_UPDATE, QUERY_CLIENTES_DELETE, EXIT
     };
 
     private enum MenuOption1 {
@@ -40,6 +40,7 @@ public class TiendaApp {
         MenuOption1 opcionElegidaAll = null;
         MenuOption2 opcionElegidaCode = null;
         Cliente nuevoCliente = null;
+        Short opcionElegidaActualizacion = 0;
 
         //instrucción try-con-recurso (el recurso es el objeto DataAccessManager declarado en el paréntesis). 
         // Automáticamente, tras el try-con-recurso, la JDK invoca al método AutoCloseable.close()
@@ -87,15 +88,15 @@ public class TiendaApp {
                             }
                         } while (opcionElegidaCode != MenuOption2.ATRAS);
                         break;
-                    case QUERY_CLIENTES_DELETE:
-                        borrarCliente(dam);
-                        break;
                     case QUERY_CLIENTES_INSERT:
                         insertarCliente(dam);
                         break;
                     case QUERY_CLIENTES_UPDATE:
-                        printOptionsUpdate();
                         actualizarCliente(dam);
+                        printOptionsUpdate();
+                        break;
+                    case QUERY_CLIENTES_DELETE:
+                        borrarCliente(dam);
                         break;
                     case EXIT:
                 }
@@ -131,12 +132,25 @@ public class TiendaApp {
     // PONGO UN CODIGO (NUMERO) Y ME DARA EL NOMBRE DEL CLIENTE CORREPONDIENTE A ESE CODIGO
     private static void searchClientesByCode(DataAccessManager dam) throws SQLException {
         String codigoCliente = requestClientContentLike();
-        List<Cliente> clientesFilteredByCode = dam.loadClientesContaining(codigoCliente);
-        if (!clientesFilteredByCode.isEmpty()) {
+        Cliente clientesFilteredByCode = dam.loadClientesByCode(codigoCliente);
+        if (clientesFilteredByCode != null) {
             printClienteCompleto(clientesFilteredByCode);
         } else {
             System.out.println("No se encontraron clientes con el código especificado.");
         }
+    }
+
+    // PARA EL UPDATE
+    private static String filtrarClientesByCode(DataAccessManager dam) throws SQLException {
+        System.out.print(" [Cliente que se actualizará] - ");
+        String codigoCliente = requestClientContentLike();
+        Cliente clientesFilteredByCode = dam.loadClientesByCode(codigoCliente);
+        if (clientesFilteredByCode != null) {
+            printClienteCompleto(clientesFilteredByCode);
+        } else {
+            System.out.println("No se encontraron clientes con el código especificado.");
+        }
+        return codigoCliente;
     }
 
     //BUSCAR EMPLEADOS POR CODIGO
@@ -172,7 +186,7 @@ public class TiendaApp {
     }
 
     private static void insertarCliente(DataAccessManager dam) throws SQLException {
-        
+
         String nombreCliente = requestNombreCliente();
         String telefono = requestTelefonoCliente();
         String fax = requestFaxCliente();
@@ -185,15 +199,46 @@ public class TiendaApp {
         dam.insertarCliente(nuevoCliente);
     }
 
+    //ACTUALIZAR CLIENTE
     private static void actualizarCliente(DataAccessManager dam) throws SQLException {
 
-        String codigoCliente = requestClientContentLike();
-        int columnasAfectadas = dam.updateClient(codigoCliente);
+        String codigoClienteAActualizarStr = filtrarClientesByCode(dam);
+
+        // Carga el cliente actual desde la base de datos
+        Cliente clienteActualizar = dam.loadClientesByCode(codigoClienteAActualizarStr);
+
+        System.out.println("(Dejar vacío para no cambiar):");
+        String nuevoNombre = requestNombreCliente();
+        if (!nuevoNombre.isEmpty()) {
+            clienteActualizar.setNombreCliente(nuevoNombre);
+        }
+
+        System.out.println("(Dejar vacío para no cambiar):");
+        String nuevoTelefono = requestTelefonoCliente();
+        if (!nuevoTelefono.isEmpty()) {
+            clienteActualizar.setTelefono(nuevoTelefono);
+        }
+
+        System.out.println("Ingrese el nuevo país del cliente (dejar vacío para no cambiar):");
+        String nuevoPais = tcl.nextLine();
+        if (!nuevoPais.isEmpty()) {
+            clienteActualizar.setPais(nuevoPais);
+        }
+
+        System.out.println("Ingrese el nuevo código del empleado representante de ventas (dejar vacío para no cambiar):");
+        String nuevoCodigoEmpleadoRepVentasStr = tcl.nextLine();
+        if (!nuevoCodigoEmpleadoRepVentasStr.isEmpty()) {
+            short nuevoCodigoEmpleadoRepVentas = Short.parseShort(nuevoCodigoEmpleadoRepVentasStr);
+            clienteActualizar.setCodigoEmpleadoRepVentas(nuevoCodigoEmpleadoRepVentas);
+        }
+
+        int columnasAfectadas = dam.updateClient(codigoClienteAActualizarStr, clienteActualizar);
         if (columnasAfectadas > 0) {
             System.out.println("Cliente actualizado exitosamente");
-            System.out.println(" Se han acualizado " + columnasAfectadas + " datos");
+            Cliente clientesFilteredByCode = dam.loadClientesByCode(codigoClienteAActualizarStr);
+            printClienteCompleto(clientesFilteredByCode);
         } else {
-            System.out.println("No se encontraron clientes con el código especificado para actualizar");
+            System.out.println("No se actualizó nada");
         }
     }
 
@@ -261,9 +306,9 @@ public class TiendaApp {
                 .append("\n\n\nElija una opción:\n")
                 .append("\t1)Consultar todos... (clientes, empleados o productos)\n")
                 .append("\t2)Consultar por codigos o gama (clientes, empleados o productos)\n")
-                .append("\t3) Borrar nuevos clientes por codigo\n")
-                .append("\t4) Insertar un nuevo cliente \n")
-                .append("\t5) Actualizar cliente \n")
+                .append("\t3) Insertar un nuevo cliente \n")
+                .append("\t4) Actualizar cliente \n")
+                .append("\t5) Borrar nuevos clientes por codigo\n")
                 .append("\t6)Salir\n")
                 .append("Opción: ");
         System.out.print(sb.toString());
@@ -290,10 +335,10 @@ public class TiendaApp {
                 .append("Opción: ");
         System.out.print(sb.toString());
     }
-    
+
     private static void printOptionsUpdate() {
         StringBuilder sb = new StringBuilder()
-                .append("\n\n\nElija que quieres consultar:\n")
+                .append("\n\n\nElija que quieres ACTUALIZAR:\n")
                 .append("\t1)Actualizar Nombre\n")
                 .append("\t2)Actualizar Telefono\n")
                 .append("\t3)Actualizar Pais \n")
@@ -315,17 +360,15 @@ public class TiendaApp {
         System.out.println();
     }
 
-    private static void printClienteCompleto(List<Cliente> clientes) {
-        if (clientes == null || clientes.isEmpty()) {
+    private static void printClienteCompleto(Cliente clientes) {
+        if (clientes == null) {
             System.out.println("No hay registros...");
             return;
         }
-        for (Cliente cliente : clientes) {
-            System.out.println("\t" + cliente);
-            System.out.println("\t Telefono de contacto = " + cliente.getTelefono());
-            System.out.println("\t Pais = " + cliente.getPais());
-            System.out.println("\t Codigo de empleado al que está relacionado = " + cliente.getCodigoClienteEmpleado());
-        }
+        System.out.println("\t" + clientes);
+        System.out.println("\t Telefono de contacto = " + clientes.getTelefono());
+        System.out.println("\t Pais = " + clientes.getPais());
+        System.out.println("\t Codigo de empleado al que está relacionado = " + clientes.getCodigoClienteEmpleado());
     }
 
     private static void printEmpleados(List<Empleado> empleados) {
@@ -369,7 +412,6 @@ public class TiendaApp {
     private static String requestClientContentLike() {
         System.out.print("Escriba el codigo del cliente; ");
         return readNotEmptyString();
-
     }
 
     private static String requestEmpleadoContentLike() {
@@ -391,7 +433,6 @@ public class TiendaApp {
         Short codigoEmpleado = requestCodigoEmpleadoCliente();
     
      */
-
     private static String requestNombreCliente() {
         System.out.print("Escriba el nombre del Cliente; ");
         return readNotEmptyString();
