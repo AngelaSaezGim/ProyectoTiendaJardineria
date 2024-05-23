@@ -39,8 +39,6 @@ public class TiendaApp {
         MenuOption opcionElegida = null;
         MenuOption1 opcionElegidaAll = null;
         MenuOption2 opcionElegidaCode = null;
-        Cliente nuevoCliente = null;
-        Short opcionElegidaActualizacion = 0;
 
         //instrucción try-con-recurso (el recurso es el objeto DataAccessManager declarado en el paréntesis). 
         // Automáticamente, tras el try-con-recurso, la JDK invoca al método AutoCloseable.close()
@@ -207,14 +205,14 @@ public class TiendaApp {
         // Carga el cliente actual desde la base de datos
         Cliente clienteActualizar = dam.loadClientesByCode(codigoClienteAActualizarStr);
 
-        System.out.println("(Dejar vacío para no cambiar):");
-        String nuevoNombre = requestNombreCliente();
+        System.out.println("Ingrese el nuevo nombre del cliente (dejar vacío para no cambiar):");
+        String nuevoNombre = tcl.nextLine();
         if (!nuevoNombre.isEmpty()) {
             clienteActualizar.setNombreCliente(nuevoNombre);
         }
 
-        System.out.println("(Dejar vacío para no cambiar):");
-        String nuevoTelefono = requestTelefonoCliente();
+        System.out.println("Ingrese el nuevo teléfono del cliente (dejar vacío para no cambiar):");
+        String nuevoTelefono = tcl.nextLine();
         if (!nuevoTelefono.isEmpty()) {
             clienteActualizar.setTelefono(nuevoTelefono);
         }
@@ -224,12 +222,11 @@ public class TiendaApp {
         if (!nuevoPais.isEmpty()) {
             clienteActualizar.setPais(nuevoPais);
         }
-
         System.out.println("Ingrese el nuevo código del empleado representante de ventas (dejar vacío para no cambiar):");
         String nuevoCodigoEmpleadoRepVentasStr = tcl.nextLine();
         if (!nuevoCodigoEmpleadoRepVentasStr.isEmpty()) {
             short nuevoCodigoEmpleadoRepVentas = Short.parseShort(nuevoCodigoEmpleadoRepVentasStr);
-            clienteActualizar.setCodigoEmpleadoRepVentas(nuevoCodigoEmpleadoRepVentas);
+            clienteActualizar.setCodigoClienteEmpleado(nuevoCodigoEmpleadoRepVentas);
         }
 
         int columnasAfectadas = dam.updateClient(codigoClienteAActualizarStr, clienteActualizar);

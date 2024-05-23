@@ -126,13 +126,10 @@ public class ClienteDAO extends DataAccessObject {
     protected int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {
 
         int filasAfectadas = 0;
+        
+        String sql = "UPDATE Clientes SET NombreCliente = ?, Telefono = ?, Pais = ?, CodigoEmpleadoRepVentas = ? WHERE CodigoCliente = ?";
 
-        try ( PreparedStatement stmt = cnt.prepareStatement("UPDATE Clientes "
-                + "SET NombreCliente=?,"
-                + "SET Telefono=?,"
-                + "SET Pais=?,"
-                + "SET CodigoEmpleadoRepVentas=?,"
-                + " WHERE CodigoCliente = ?")) {
+        try ( PreparedStatement stmt = cnt.prepareStatement(sql)) {
             stmt.setString(1, clienteActualizar.getNombreCliente());
             stmt.setString(2, clienteActualizar.getTelefono());
             stmt.setString(3, clienteActualizar.getPais());
