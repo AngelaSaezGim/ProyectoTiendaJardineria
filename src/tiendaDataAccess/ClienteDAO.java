@@ -60,7 +60,7 @@ public class ClienteDAO extends DataAccessObject {
         ResultSet result = stmt.executeQuery();
 
         if (result.next()) {
-            return readClientesFromResultSet(result);        
+            return readClientesFromResultSet(result);
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class ClienteDAO extends DataAccessObject {
         return filasAfectadas;
     }
 
-    protected void insertClient(Cliente cliente) throws SQLException {        
+    protected void insertClient(Cliente cliente) throws SQLException {
         String sentenciaSQL = "INSERT INTO clientes ("
                 + ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO + ", "
                 + ClientesTableColumns.COLUMN_CLIENTE_NOMBRE + ", "
@@ -105,7 +105,7 @@ public class ClienteDAO extends DataAccessObject {
             stmt.setShort(8, cliente.getCodigoClienteEmpleado());
 
             stmt.executeUpdate();
-            
+
             cliente.setCodigoCliente(codCliente);
         }
     }
@@ -126,7 +126,7 @@ public class ClienteDAO extends DataAccessObject {
     protected int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {
 
         int filasAfectadas = 0;
-        
+
         String sql = "UPDATE Clientes SET NombreCliente = ?, Telefono = ?, Pais = ?, CodigoEmpleadoRepVentas = ? WHERE CodigoCliente = ?";
 
         try ( PreparedStatement stmt = cnt.prepareStatement(sql)) {
@@ -135,7 +135,7 @@ public class ClienteDAO extends DataAccessObject {
             stmt.setString(3, clienteActualizar.getPais());
             stmt.setShort(4, clienteActualizar.getCodigoClienteEmpleado());
             stmt.setString(5, codigoCliente);
-            
+
             filasAfectadas = stmt.executeUpdate();
         }
         // DEVUELVE LAS FILAS AFECTADAS por la actualización

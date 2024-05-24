@@ -13,6 +13,8 @@ import tiendaObjetos.Cliente;
 import tiendaObjetos.Empleado;
 import tiendaObjetos.Producto;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author angsaegim
@@ -205,38 +207,44 @@ public class TiendaApp {
         // Carga el cliente actual desde la base de datos
         Cliente clienteActualizar = dam.loadClientesByCode(codigoClienteAActualizarStr);
 
-        System.out.println("Ingrese el nuevo nombre del cliente (dejar vacío para no cambiar):");
-        String nuevoNombre = tcl.nextLine();
-        if (!nuevoNombre.isEmpty()) {
-            clienteActualizar.setNombreCliente(nuevoNombre);
-        }
-
-        System.out.println("Ingrese el nuevo teléfono del cliente (dejar vacío para no cambiar):");
-        String nuevoTelefono = tcl.nextLine();
-        if (!nuevoTelefono.isEmpty()) {
-            clienteActualizar.setTelefono(nuevoTelefono);
-        }
-
-        System.out.println("Ingrese el nuevo país del cliente (dejar vacío para no cambiar):");
-        String nuevoPais = tcl.nextLine();
-        if (!nuevoPais.isEmpty()) {
-            clienteActualizar.setPais(nuevoPais);
-        }
-        System.out.println("Ingrese el nuevo código del empleado representante de ventas (dejar vacío para no cambiar):");
-        String nuevoCodigoEmpleadoRepVentasStr = tcl.nextLine();
-        if (!nuevoCodigoEmpleadoRepVentasStr.isEmpty()) {
-            short nuevoCodigoEmpleadoRepVentas = Short.parseShort(nuevoCodigoEmpleadoRepVentasStr);
-            clienteActualizar.setCodigoClienteEmpleado(nuevoCodigoEmpleadoRepVentas);
-        }
-
-        int columnasAfectadas = dam.updateClient(codigoClienteAActualizarStr, clienteActualizar);
-        if (columnasAfectadas > 0) {
-            System.out.println("Cliente actualizado exitosamente");
-            Cliente clientesFilteredByCode = dam.loadClientesByCode(codigoClienteAActualizarStr);
-            printClienteCompleto(clientesFilteredByCode);
+        if (clienteActualizar == null) {
+            System.out.println(codigoClienteAActualizarStr + " no existe");
         } else {
-            System.out.println("No se actualizó nada");
+
+            System.out.println("Ingrese el nuevo nombre del cliente (dejar vacío para no cambiar):");
+            String nuevoNombre = tcl.nextLine();
+            if (!nuevoNombre.isEmpty()) {
+                clienteActualizar.setNombreCliente(nuevoNombre);
+            }
+
+            System.out.println("Ingrese el nuevo teléfono del cliente (dejar vacío para no cambiar):");
+            String nuevoTelefono = tcl.nextLine();
+            if (!nuevoTelefono.isEmpty()) {
+                clienteActualizar.setTelefono(nuevoTelefono);
+            }
+
+            System.out.println("Ingrese el nuevo país del cliente (dejar vacío para no cambiar):");
+            String nuevoPais = tcl.nextLine();
+            if (!nuevoPais.isEmpty()) {
+                clienteActualizar.setPais(nuevoPais);
+            }
+            System.out.println("Ingrese el nuevo código del empleado representante de ventas (dejar vacío para no cambiar):");
+            String nuevoCodigoEmpleadoRepVentasStr = tcl.nextLine();
+            if (!nuevoCodigoEmpleadoRepVentasStr.isEmpty()) {
+                short nuevoCodigoEmpleadoRepVentas = Short.parseShort(nuevoCodigoEmpleadoRepVentasStr);
+                clienteActualizar.setCodigoClienteEmpleado(nuevoCodigoEmpleadoRepVentas);
+            }
+
+            int columnasAfectadas = dam.updateClient(codigoClienteAActualizarStr, clienteActualizar);
+            if (columnasAfectadas > 0) {
+                System.out.println("Cliente actualizado exitosamente");
+                Cliente clientesFilteredByCode = dam.loadClientesByCode(codigoClienteAActualizarStr);
+                printClienteCompleto(clientesFilteredByCode);
+            } else {
+                System.out.println("No se actualizó nada");
+            }
         }
+
     }
 
 
