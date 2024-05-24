@@ -40,6 +40,7 @@ public class TiendaUIApp {
         mainWindow.addWindowListener(new WindowListener() {
             @Override
             public void windowClosing(WindowEvent arg0) {
+                
                 if (DataAccessManager.connectionEnabled()) {
                     DataAccessManager.getInstance().close();
                 }
