@@ -213,8 +213,8 @@ public class DataAccessManager implements AutoCloseable {
         return this.clientesDAO.deleteClient(content);
     }
 
-    public void insertarCliente(Cliente cliente) throws SQLException {
-        this.clientesDAO.insertClient(cliente);
+    public int insertarCliente(Cliente cliente) throws SQLException {
+        return this.clientesDAO.insertClient(cliente);
     }
 
     public int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {

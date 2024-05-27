@@ -10,13 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tiendaObjetos.Cliente;
 
 /**
  *
  * @author angsaegim
  */
-public class ClienteDAO extends DataAccessObject {
+public class ClienteDAO extends DataAccessObject{
 
     ClienteDAO(Connection cnt) {
         super(cnt);
@@ -75,13 +78,18 @@ public class ClienteDAO extends DataAccessObject {
             // NO USAR resultSet
             // USAR executeUpdate();
             filasAfectadas = stmt.executeUpdate();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado al borrar el cliente" + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         // DEVUELVE LAS FILAS AFECTADAS por la eliminación
         return filasAfectadas;
     }
 
-    protected void insertClient(Cliente cliente) throws SQLException {
+    protected int insertClient(Cliente cliente) throws SQLException {
+        
+        int filasAfectadas = 0;
+        
         String sentenciaSQL = "INSERT INTO clientes ("
                 + ClientesTableColumns.COLUMN_NAME_CLIENTE_CODIGO + ", "
                 + ClientesTableColumns.COLUMN_CLIENTE_NOMBRE + ", "
@@ -104,10 +112,14 @@ public class ClienteDAO extends DataAccessObject {
             stmt.setString(7, cliente.getPais());
             stmt.setShort(8, cliente.getCodigoClienteEmpleado());
 
-            stmt.executeUpdate();
+            filasAfectadas = stmt.executeUpdate();
 
             cliente.setCodigoCliente(codCliente);
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado al insertar el cliente" + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        return filasAfectadas;
     }
 
     private Integer obtenerMaxId() throws SQLException {
@@ -137,6 +149,8 @@ public class ClienteDAO extends DataAccessObject {
             stmt.setString(5, codigoCliente);
 
             filasAfectadas = stmt.executeUpdate();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado al actualizar el cliente" + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
         // DEVUELVE LAS FILAS AFECTADAS por la actualización
         return filasAfectadas;

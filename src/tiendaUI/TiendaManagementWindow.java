@@ -5,18 +5,6 @@
 package tiendaUI;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-
-import tiendaDataAccess.DataAccessManager;
-import tiendaObjetos.Cliente;
-
 /**
  *
  * @author angsaegim
@@ -28,10 +16,11 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
      */
     //invocamos el método que completa la vista del formulario (se auto-implementa con las acciones que realizamos en tiempo de diseño)      
     public TiendaManagementWindow() throws SQLException {
+        
         initComponents();
-
-        //cargar datos en tabla
-        loadData();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Tienda Jardineria");
     }
 
     /**
@@ -45,11 +34,14 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         jCheckBox1 = new javax.swing.JCheckBox();
-        iniciarPrograma = new javax.swing.JButton();
-        iniciarPrograma1 = new javax.swing.JButton();
-        iniciarPrograma4 = new javax.swing.JButton();
-        iniciarPrograma5 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        contenedor = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        consultarDatosButton = new javax.swing.JButton();
+        nuevoClienteButton = new javax.swing.JButton();
+        actualizarClientesButton = new javax.swing.JButton();
+        borrarClientesButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        tituloLabel = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
 
@@ -57,85 +49,142 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        iniciarPrograma.setBackground(new java.awt.Color(204, 204, 204));
-        iniciarPrograma.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
-        iniciarPrograma.setText("Consultar Datos");
-        iniciarPrograma.setActionCommand("Consultar");
-        iniciarPrograma.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
+        contenedor.setLayout(contenedorLayout);
+        contenedorLayout.setHorizontalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        contenedorLayout.setVerticalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 534, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        consultarDatosButton.setBackground(new java.awt.Color(208, 208, 208));
+        consultarDatosButton.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        consultarDatosButton.setText("Consultar Datos");
+        consultarDatosButton.setActionCommand("Consultar");
+        consultarDatosButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        consultarDatosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultarDatosActionPerformed(evt);
             }
         });
 
-        iniciarPrograma1.setBackground(new java.awt.Color(204, 204, 204));
-        iniciarPrograma1.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
-        iniciarPrograma1.setText("Nuevo Cliente");
-        iniciarPrograma1.setActionCommand("Consultar");
-        iniciarPrograma1.addActionListener(new java.awt.event.ActionListener() {
+        nuevoClienteButton.setBackground(new java.awt.Color(208, 208, 208));
+        nuevoClienteButton.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        nuevoClienteButton.setText("Nuevo Cliente");
+        nuevoClienteButton.setActionCommand("Consultar");
+        nuevoClienteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        nuevoClienteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nuevoClienteActionPerformed(evt);
             }
         });
 
-        iniciarPrograma4.setBackground(new java.awt.Color(204, 204, 204));
-        iniciarPrograma4.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
-        iniciarPrograma4.setText("Actualizar Clientes");
-        iniciarPrograma4.setActionCommand("Consultar");
-        iniciarPrograma4.addActionListener(new java.awt.event.ActionListener() {
+        actualizarClientesButton.setBackground(new java.awt.Color(208, 208, 208));
+        actualizarClientesButton.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        actualizarClientesButton.setText("Actualizar Clientes");
+        actualizarClientesButton.setActionCommand("Consultar");
+        actualizarClientesButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        actualizarClientesButton.setMaximumSize(new java.awt.Dimension(143, 143));
+        actualizarClientesButton.setMinimumSize(new java.awt.Dimension(143, 143));
+        actualizarClientesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actualizarClienteActionPerformed(evt);
             }
         });
 
-        iniciarPrograma5.setBackground(new java.awt.Color(204, 204, 204));
-        iniciarPrograma5.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
-        iniciarPrograma5.setText("Borrar Clientes");
-        iniciarPrograma5.setActionCommand("Consultar");
-        iniciarPrograma5.addActionListener(new java.awt.event.ActionListener() {
+        borrarClientesButton.setBackground(new java.awt.Color(208, 208, 208));
+        borrarClientesButton.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
+        borrarClientesButton.setText("Borrar Clientes");
+        borrarClientesButton.setActionCommand("Consultar");
+        borrarClientesButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        borrarClientesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 borrarClientesActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Noto Sans Display Medium", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TIENDA JARDINERIA");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(consultarDatosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(nuevoClienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(actualizarClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(borrarClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(consultarDatosButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nuevoClienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(actualizarClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(borrarClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        tituloLabel.setFont(new java.awt.Font("Noto Sans Display Medium", 1, 36)); // NOI18N
+        tituloLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloLabel.setText("TIENDA JARDINERIA");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tituloLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(283, 283, 283))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tituloLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(179, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(253, 253, 253))
             .addGroup(layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addComponent(iniciarPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(contenedor)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(iniciarPrograma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(iniciarPrograma4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(iniciarPrograma5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iniciarPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(iniciarPrograma1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(iniciarPrograma4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(iniciarPrograma5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addComponent(contenedor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -143,31 +192,42 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
 
     private void consultarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarDatosActionPerformed
         // TODO add your handling code here:
+        ConsultClientWindow ventanaConsultarCientes = new ConsultClientWindow();
+        contenedor.add(ventanaConsultarCientes);
+        ventanaConsultarCientes.setVisible(true);
     }//GEN-LAST:event_consultarDatosActionPerformed
 
     private void nuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteActionPerformed
         // TODO add your handling code here:
+        InsertClientWindow ventanaInsertarClientes = new InsertClientWindow();
+        contenedor.add(ventanaInsertarClientes);
+        ventanaInsertarClientes.setVisible(true);
     }//GEN-LAST:event_nuevoClienteActionPerformed
 
     private void actualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarClienteActionPerformed
         // TODO add your handling code here:
+        UpdateClientWindow ventanaActualizarClientes = new UpdateClientWindow();
+        contenedor.add(ventanaActualizarClientes);
+        ventanaActualizarClientes.setVisible(true);
     }//GEN-LAST:event_actualizarClienteActionPerformed
 
     private void borrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarClientesActionPerformed
         // TODO add your handling code here:
+        DeleteClientWindow ventanaBorrarClientes = new DeleteClientWindow();
+        contenedor.add(ventanaBorrarClientes);
+        ventanaBorrarClientes.setVisible(true);
     }//GEN-LAST:event_borrarClientesActionPerformed
 
-    private void loadData() throws SQLException {
-        //carga de datos en memoria
-        List<Cliente> clientes = DataAccessManager.getInstance().loadAllClientes();
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton iniciarPrograma;
-    private javax.swing.JButton iniciarPrograma1;
-    private javax.swing.JButton iniciarPrograma4;
-    private javax.swing.JButton iniciarPrograma5;
+    private javax.swing.JButton actualizarClientesButton;
+    private javax.swing.JButton borrarClientesButton;
+    private javax.swing.JButton consultarDatosButton;
+    private javax.swing.JDesktopPane contenedor;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton nuevoClienteButton;
+    private javax.swing.JLabel tituloLabel;
     // End of variables declaration//GEN-END:variables
 }
