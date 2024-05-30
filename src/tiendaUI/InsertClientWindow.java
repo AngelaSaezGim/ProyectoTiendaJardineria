@@ -22,10 +22,14 @@ import tiendaObjetos.Cliente;
 // INTERNAL FRAME
 public class InsertClientWindow extends javax.swing.JInternalFrame {
 
+    private TiendaManagementWindow mainMenu;
+
     /**
      * Creates new form insertClientWindow
      */
-    public InsertClientWindow() {
+    public InsertClientWindow(TiendaManagementWindow mainMenu) {
+        
+        this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
     }
@@ -57,6 +61,8 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(965, 539));
 
         ingresarBoton.setText("Ingresar");
         ingresarBoton.addActionListener(new java.awt.event.ActionListener() {
@@ -177,17 +183,9 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void regresarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarBotonActionPerformed
-        // TODO add your handling code here:
-        TiendaManagementWindow mainMenu = null;
-
-        try {
-            mainMenu = new TiendaManagementWindow();
-        } catch (SQLException sqle) {
-            System.out.println("Error al iniciar la aplicación. " + sqle.getMessage() + ". Saliendo...");
-            return;
-        }
-        mainMenu.setVisible(true);
-        
+        // Hacer invisible la ventana actual
+        this.dispose(); //cerramos
+        mainMenu.setVisible(true); //enseñar menu 
     }//GEN-LAST:event_regresarBotonActionPerformed
 
     private void ingresarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarBotonActionPerformed

@@ -10,10 +10,13 @@ package tiendaUI;
  */
 public class DeleteClientWindow extends javax.swing.JInternalFrame {
 
+    private TiendaManagementWindow mainMenu;
     /**
      * Creates new form deleteClientWindow
      */
-    public DeleteClientWindow() {
+    public DeleteClientWindow(TiendaManagementWindow mainMenu) {
+        
+        this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
     }
@@ -27,23 +30,47 @@ public class DeleteClientWindow extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        regresarButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(965, 539));
+
+        regresarButton.setText("Atrás");
+        regresarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regresarButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(regresarButton)
+                .addContainerGap(875, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(regresarButton)
+                .addContainerGap(472, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void regresarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarButtonActionPerformed
+        // TODO add your handling code here:
+        // Hacer invisible la ventana actual
+        this.dispose(); //cerramos
+        mainMenu.setVisible(true); //enseñar menu 
+    }//GEN-LAST:event_regresarButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton regresarButton;
     // End of variables declaration//GEN-END:variables
 }

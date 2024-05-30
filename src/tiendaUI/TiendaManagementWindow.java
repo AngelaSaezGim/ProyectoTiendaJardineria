@@ -4,6 +4,7 @@
  */
 package tiendaUI;
 
+import java.awt.Window;
 import java.sql.SQLException;
 /**
  *
@@ -48,6 +49,9 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 800));
+
+        contenedor.setPreferredSize(new java.awt.Dimension(0, 500));
 
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
         contenedor.setLayout(contenedorLayout);
@@ -57,16 +61,16 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         );
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
+            .addGap(0, 522, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         consultarDatosButton.setBackground(new java.awt.Color(208, 208, 208));
         consultarDatosButton.setFont(new java.awt.Font("Bitstream Charter", 1, 18)); // NOI18N
-        consultarDatosButton.setText("Consultar Datos");
         consultarDatosButton.setActionCommand("Consultar");
         consultarDatosButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        consultarDatosButton.setLabel("Consultar Clientes");
         consultarDatosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultarDatosActionPerformed(evt);
@@ -163,16 +167,16 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(contenedor)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(contenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,8 +185,8 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contenedor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -192,28 +196,28 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
 
     private void consultarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarDatosActionPerformed
         // TODO add your handling code here:
-        ConsultClientWindow ventanaConsultarCientes = new ConsultClientWindow();
+        ConsultClientWindow ventanaConsultarCientes = new ConsultClientWindow(this);
         contenedor.add(ventanaConsultarCientes);
         ventanaConsultarCientes.setVisible(true);
     }//GEN-LAST:event_consultarDatosActionPerformed
 
     private void nuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteActionPerformed
         // TODO add your handling code here:
-        InsertClientWindow ventanaInsertarClientes = new InsertClientWindow();
+        InsertClientWindow ventanaInsertarClientes = new InsertClientWindow(this);
         contenedor.add(ventanaInsertarClientes);
         ventanaInsertarClientes.setVisible(true);
     }//GEN-LAST:event_nuevoClienteActionPerformed
 
     private void actualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarClienteActionPerformed
         // TODO add your handling code here:
-        UpdateClientWindow ventanaActualizarClientes = new UpdateClientWindow();
+        UpdateClientWindow ventanaActualizarClientes = new UpdateClientWindow(this);
         contenedor.add(ventanaActualizarClientes);
         ventanaActualizarClientes.setVisible(true);
     }//GEN-LAST:event_actualizarClienteActionPerformed
 
     private void borrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarClientesActionPerformed
         // TODO add your handling code here:
-        DeleteClientWindow ventanaBorrarClientes = new DeleteClientWindow();
+        DeleteClientWindow ventanaBorrarClientes = new DeleteClientWindow(this);
         contenedor.add(ventanaBorrarClientes);
         ventanaBorrarClientes.setVisible(true);
     }//GEN-LAST:event_borrarClientesActionPerformed
