@@ -4,9 +4,15 @@
  */
 package tiendaUI;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Window;
+import java.io.File;
+import javax.imageio.ImageIO;
 import java.util.*;
 import java.sql.SQLException;
+import java.io.IOException;
 import javax.swing.*;
 /**
  *
@@ -18,7 +24,9 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
      * Creates new form TiendaAppUI
      */
     // Lista para mantener las ventanas abiertas
-    private final List<JInternalFrame> openWindows;
+    private final List<JInternalFrame> OPENWINDOWS;
+    private JLabel backgroundLabel;
+    public final static String IMAGENRUTA = "resources" + File.separator + "fondo.jpg";
     
     //invocamos el método que completa la vista del formulario (se auto-implementa con las acciones que realizamos en tiempo de diseño)      
     public TiendaManagementWindow() throws SQLException {
@@ -30,7 +38,18 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         
         //Array de JinternalFrame abiertos (para poder cerrarlos correctamente cuando
         // cambie de pagina).
-        openWindows = new ArrayList<>();
+        OPENWINDOWS = new ArrayList<>();
+        
+       // Establecer la imagen de fondo
+        try {
+            // Establecer la imagen de fondo
+            ImageIcon backgroundImage = new ImageIcon(ImageIO.read(getClass().getResource(IMAGENRUTA)));
+            backgroundLabel = new JLabel(backgroundImage);
+            backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
+            jPanel2.add(backgroundLabel);
+            jPanel2.setComponentZOrder(backgroundLabel, 0); // Asegurar que la imagen esté detrás de otros componentes
+        } catch (IOException e) {
+        }
     }
 
     /**
@@ -204,10 +223,10 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void closeOpenWindows() {
-        for (JInternalFrame window : openWindows) {
+        for (JInternalFrame window : OPENWINDOWS) {
             window.dispose();
         }
-        openWindows.clear();
+        OPENWINDOWS.clear();
     }
     
     private void consultarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarDatosActionPerformed
@@ -218,7 +237,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         ConsultClientWindow ventanaConsultarCientes = new ConsultClientWindow(this);
         contenedor.add(ventanaConsultarCientes);
         ventanaConsultarCientes.setVisible(true);
-        openWindows.add(ventanaConsultarCientes);
+        OPENWINDOWS.add(ventanaConsultarCientes);
     }//GEN-LAST:event_consultarDatosActionPerformed
 
     private void nuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteActionPerformed
@@ -229,7 +248,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         InsertClientWindow ventanaInsertarClientes = new InsertClientWindow(this);
         contenedor.add(ventanaInsertarClientes);
         ventanaInsertarClientes.setVisible(true);
-        openWindows.add(ventanaInsertarClientes);
+        OPENWINDOWS.add(ventanaInsertarClientes);
     }//GEN-LAST:event_nuevoClienteActionPerformed
 
     private void actualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarClienteActionPerformed
@@ -238,7 +257,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         UpdateClientWindow ventanaActualizarClientes = new UpdateClientWindow(this);
         contenedor.add(ventanaActualizarClientes);
         ventanaActualizarClientes.setVisible(true);
-        openWindows.add(ventanaActualizarClientes);
+        OPENWINDOWS.add(ventanaActualizarClientes);
     }//GEN-LAST:event_actualizarClienteActionPerformed
 
     private void borrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarClientesActionPerformed
@@ -247,7 +266,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         DeleteClientWindow ventanaBorrarClientes = new DeleteClientWindow(this);
         contenedor.add(ventanaBorrarClientes);
         ventanaBorrarClientes.setVisible(true);
-        openWindows.add(ventanaBorrarClientes);
+        OPENWINDOWS.add(ventanaBorrarClientes);
     }//GEN-LAST:event_borrarClientesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
