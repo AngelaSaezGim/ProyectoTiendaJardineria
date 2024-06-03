@@ -34,6 +34,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
      */
     public InsertClientWindow(TiendaManagementWindow mainMenu) {
 
+        this.setBorder(null);
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
@@ -85,7 +86,8 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(965, 539));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setPreferredSize(new java.awt.Dimension(950, 522));
 
         ingresarBoton.setText("Ingresar");
         ingresarBoton.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +162,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
                             .addComponent(txtLineaDireccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCiudadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPaisCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addContainerGap(510, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +201,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ingresarBoton)
                     .addComponent(borrarBoton))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();

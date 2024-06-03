@@ -29,6 +29,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
      */
     public ConsultClientWindow(TiendaManagementWindow mainMenu) {
 
+        this.setBorder(null);
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
@@ -104,9 +105,10 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setToolTipText("");
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(965, 539));
+        setPreferredSize(new java.awt.Dimension(950, 522));
 
         regresar.setText("Atrás");
         regresar.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +177,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 941, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(regresar)
                         .addGap(0, 0, Short.MAX_VALUE))

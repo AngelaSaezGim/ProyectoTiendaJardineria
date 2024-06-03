@@ -41,16 +41,25 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         // cambie de pagina).
         OPENWINDOWS = new ArrayList<>();
         
+         // Establecer la imagen del icono
+        ImageIcon icon = new ImageIcon("resources/florIcon.png");
+        setIconImage(icon.getImage());
+        
+        
        // Establecer la imagen de fondo
        File file = new File("resources/fondo.jpg");
         try {
             // Establecer la imagen de fondo
             BufferedImage backgroundImage = ImageIO.read(file);
-            ImageIcon backgroundIcon = new ImageIcon(backgroundImage);
+            // Escalar la imagen para que sea un poco más grande
+            int newWidth = (int) (backgroundImage.getWidth() * 1.3);
+            int newHeight = (int) (backgroundImage.getHeight() * 1);
+            Image scaledImage = backgroundImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+            ImageIcon backgroundIcon = new ImageIcon(scaledImage);
             backgroundLabel = new JLabel(backgroundIcon);
             backgroundLabel.setBounds(0, 0, backgroundIcon.getIconWidth(), backgroundIcon.getIconHeight());
-            jPanel1.add(backgroundLabel);
-            jPanel1.setComponentZOrder(backgroundLabel, 0); // Asegurar que la imagen esté detrás de otros componentes
+            contenedor.add(backgroundLabel, 0); // Asegurar que la imagen esté detrás de otros componentes
         } catch (IOException e) {
         }
     }
@@ -80,9 +89,9 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 800));
 
         contenedor.setBackground(new java.awt.Color(255, 255, 255));
+        contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         contenedor.setPreferredSize(new java.awt.Dimension(0, 500));
 
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
@@ -93,7 +102,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         );
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGap(0, 520, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

@@ -23,6 +23,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
      */
     public UpdateClientWindow(TiendaManagementWindow mainMenu) {
         
+        this.setBorder(null);
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
@@ -58,8 +59,9 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
 
         regresarButton = new javax.swing.JButton();
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(965, 539));
+        setPreferredSize(new java.awt.Dimension(950, 522));
 
         regresarButton.setText("Atrás");
         regresarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,14 +77,14 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(regresarButton)
-                .addContainerGap(875, Short.MAX_VALUE))
+                .addContainerGap(885, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(regresarButton)
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(484, Short.MAX_VALUE))
         );
 
         pack();
