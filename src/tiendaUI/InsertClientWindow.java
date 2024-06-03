@@ -5,10 +5,13 @@
 package tiendaUI;
 
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import tiendaAppUI.TiendaUIApp;
 
 import tiendaDataAccess.DataAccessManager;
@@ -18,20 +21,35 @@ import tiendaObjetos.Cliente;
  *
  * @author angsaegim
  */
-
 // INTERNAL FRAME
 public class InsertClientWindow extends javax.swing.JInternalFrame {
 
     private TiendaManagementWindow mainMenu;
+    // Para que el frame NO SE MUEVA
+    private final int fixedX = 0;
+    private final int fixedY = 0;
 
     /**
      * Creates new form insertClientWindow
      */
     public InsertClientWindow(TiendaManagementWindow mainMenu) {
-        
+
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null); // Eliminar el borde superior
+        this.setLocation(fixedX, fixedY);
+
+        // Desactivar el listener de arrastre
+        this.removeMouseListener(this.getMouseListeners()[0]);
+
+        // Para no poder arrastrar y mover el frame
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                setLocation(fixedX, fixedY);
+            }
+        });
     }
 
     /**
@@ -41,6 +59,11 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
 
+    // Ventana fija
+     @Override
+     public void setLocation(int x, int y) {
+        // No hagas nada para evitar que el JInternalFrame se mueva
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

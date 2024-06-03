@@ -5,7 +5,9 @@
 package tiendaUI;
 
 import java.awt.Window;
+import java.util.*;
 import java.sql.SQLException;
+import javax.swing.*;
 /**
  *
  * @author angsaegim
@@ -15,6 +17,9 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
     /**
      * Creates new form TiendaAppUI
      */
+    // Lista para mantener las ventanas abiertas
+    private final List<JInternalFrame> openWindows;
+    
     //invocamos el método que completa la vista del formulario (se auto-implementa con las acciones que realizamos en tiempo de diseño)      
     public TiendaManagementWindow() throws SQLException {
         
@@ -22,6 +27,10 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Tienda Jardineria");
+        
+        //Array de JinternalFrame abiertos (para poder cerrarlos correctamente cuando
+        // cambie de pagina).
+        openWindows = new ArrayList<>();
     }
 
     /**
@@ -194,32 +203,51 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void closeOpenWindows() {
+        for (JInternalFrame window : openWindows) {
+            window.dispose();
+        }
+        openWindows.clear();
+    }
+    
     private void consultarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarDatosActionPerformed
         // TODO add your handling code here:
+         // Cerrar las ventanas abiertas
+        closeOpenWindows();
+        
         ConsultClientWindow ventanaConsultarCientes = new ConsultClientWindow(this);
         contenedor.add(ventanaConsultarCientes);
         ventanaConsultarCientes.setVisible(true);
+        openWindows.add(ventanaConsultarCientes);
     }//GEN-LAST:event_consultarDatosActionPerformed
 
     private void nuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoClienteActionPerformed
         // TODO add your handling code here:
+        // Cerrar las ventanas abiertas
+        closeOpenWindows();
+        
         InsertClientWindow ventanaInsertarClientes = new InsertClientWindow(this);
         contenedor.add(ventanaInsertarClientes);
         ventanaInsertarClientes.setVisible(true);
+        openWindows.add(ventanaInsertarClientes);
     }//GEN-LAST:event_nuevoClienteActionPerformed
 
     private void actualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarClienteActionPerformed
         // TODO add your handling code here:
+        // Cerrar la ventana actual
         UpdateClientWindow ventanaActualizarClientes = new UpdateClientWindow(this);
         contenedor.add(ventanaActualizarClientes);
         ventanaActualizarClientes.setVisible(true);
+        openWindows.add(ventanaActualizarClientes);
     }//GEN-LAST:event_actualizarClienteActionPerformed
 
     private void borrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarClientesActionPerformed
         // TODO add your handling code here:
+        // Cerrar la ventana actual
         DeleteClientWindow ventanaBorrarClientes = new DeleteClientWindow(this);
         contenedor.add(ventanaBorrarClientes);
         ventanaBorrarClientes.setVisible(true);
+        openWindows.add(ventanaBorrarClientes);
     }//GEN-LAST:event_borrarClientesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

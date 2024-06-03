@@ -6,8 +6,9 @@ package tiendaUI;
 
 import java.sql.SQLException;
 import java.util.List;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import tiendaDataAccess.DataAccessManager;
 import tiendaObjetos.Cliente;
@@ -16,9 +17,12 @@ import tiendaObjetos.Cliente;
  *
  * @author angsaegim
  */
-public class ConsultClientWindow extends javax.swing.JInternalFrame {
-    
+public final class ConsultClientWindow extends javax.swing.JInternalFrame {
+
     private TiendaManagementWindow mainMenu;
+    // Para que el frame NO SE MUEVA
+    private final int fixedX = 0;
+    private final int fixedY = 0;
 
     /**
      * Creates new form consultClientWindow
@@ -28,7 +32,19 @@ public class ConsultClientWindow extends javax.swing.JInternalFrame {
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
-        
+         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null); // Eliminar el borde superior
+        this.setLocation(fixedX, fixedY);
+
+        // Desactivar el listener de arrastre
+        this.removeMouseListener(this.getMouseListeners()[0]);
+
+        // Para no poder arrastrar y mover el frame
+         addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                setLocation(fixedX, fixedY);
+            }
+        });
         
         //cargamos todos los datos en la tabla
         try {
@@ -44,7 +60,6 @@ public class ConsultClientWindow extends javax.swing.JInternalFrame {
         
         idABuscar.setEnabled(true); 
         idABuscar.setEditable(true);
-        
     }
 
     /**
@@ -182,8 +197,14 @@ public class ConsultClientWindow extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Ventana fija
+     @Override
+     public void setLocation(int x, int y) {
+        // No hagas nada para evitar que el JInternalFrame se mueva
+    }
+     
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
-       // Hacer invisible la ventana actual
+        // Hacer invisible la ventana actual
         this.dispose(); //cerramos
         mainMenu.setVisible(true); //enseñar menu
     }//GEN-LAST:event_regresarActionPerformed
@@ -235,10 +256,4 @@ public class ConsultClientWindow extends javax.swing.JInternalFrame {
         //asociamos el modelo de datos creado a la JTable de la ventana, para hacer los datos visibles
         this.clientList.setModel(dtm);
     }
-    
-    @Override
-     public void setLocation(int x, int y) {
-        // No hagas nada para evitar que el JInternalFrame se mueva
-    }
-
 }
