@@ -14,6 +14,8 @@ import java.util.*;
 import java.sql.SQLException;
 import java.io.IOException;
 import javax.swing.*;
+import java.io.InputStream;
+import java.awt.image.BufferedImage;
 /**
  *
  * @author angsaegim
@@ -26,7 +28,6 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
     // Lista para mantener las ventanas abiertas
     private final List<JInternalFrame> OPENWINDOWS;
     private JLabel backgroundLabel;
-    public final static String IMAGENRUTA = "resources" + File.separator + "fondo.jpg";
     
     //invocamos el método que completa la vista del formulario (se auto-implementa con las acciones que realizamos en tiempo de diseño)      
     public TiendaManagementWindow() throws SQLException {
@@ -41,13 +42,15 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         OPENWINDOWS = new ArrayList<>();
         
        // Establecer la imagen de fondo
+       File file = new File("resources/fondo.jpg");
         try {
             // Establecer la imagen de fondo
-            ImageIcon backgroundImage = new ImageIcon(ImageIO.read(getClass().getResource(IMAGENRUTA)));
-            backgroundLabel = new JLabel(backgroundImage);
-            backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
-            jPanel2.add(backgroundLabel);
-            jPanel2.setComponentZOrder(backgroundLabel, 0); // Asegurar que la imagen esté detrás de otros componentes
+            BufferedImage backgroundImage = ImageIO.read(file);
+            ImageIcon backgroundIcon = new ImageIcon(backgroundImage);
+            backgroundLabel = new JLabel(backgroundIcon);
+            backgroundLabel.setBounds(0, 0, backgroundIcon.getIconWidth(), backgroundIcon.getIconHeight());
+            jPanel1.add(backgroundLabel);
+            jPanel1.setComponentZOrder(backgroundLabel, 0); // Asegurar que la imagen esté detrás de otros componentes
         } catch (IOException e) {
         }
     }
@@ -79,6 +82,7 @@ public class TiendaManagementWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 800));
 
+        contenedor.setBackground(new java.awt.Color(255, 255, 255));
         contenedor.setPreferredSize(new java.awt.Dimension(0, 500));
 
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
