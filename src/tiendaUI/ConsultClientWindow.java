@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.JOptionPane;
 
 import tiendaDataAccess.DataAccessManager;
 import tiendaObjetos.Cliente;
@@ -33,20 +34,20 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         this.mainMenu = mainMenu;
         initComponents();
         this.setResizable(false);
-         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null); // Eliminar el borde superior
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null); // Eliminar el borde superior
         this.setLocation(fixedX, fixedY);
 
         // Desactivar el listener de arrastre
         this.removeMouseListener(this.getMouseListeners()[0]);
 
         // Para no poder arrastrar y mover el frame
-         addComponentListener(new ComponentAdapter() {
+        addComponentListener(new ComponentAdapter() {
             @Override
             public void componentMoved(ComponentEvent e) {
                 setLocation(fixedX, fixedY);
             }
         });
-        
+
         //cargamos todos los datos en la tabla
         try {
             loadData();
@@ -58,8 +59,8 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         this.clientList.setCellSelectionEnabled(false);
         this.clientList.setRowSelectionAllowed(false);
         this.clientList.setColumnSelectionAllowed(false);
-        
-        idABuscar.setEnabled(true); 
+
+        idABuscar.setEnabled(true);
         idABuscar.setEditable(true);
     }
 
@@ -81,7 +82,8 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         idABuscar = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botonBuscar = new javax.swing.JButton();
+        botontablaCompleta = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,7 +146,19 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
 
         jLabel1.setText("ID a buscar :");
 
-        jButton1.setText("Buscar");
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+
+        botontablaCompleta.setText("Ver tabla completa");
+        botontablaCompleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botontablaCompletaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -156,7 +170,9 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botontablaCompleta)
+                .addGap(18, 18, 18)
+                .addComponent(botonBuscar)
                 .addGap(46, 46, 46))
         );
         jPanel3Layout.setVerticalGroup(
@@ -164,10 +180,12 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botonBuscar)
+                        .addComponent(botontablaCompleta))
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,7 +195,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(regresar)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -200,22 +218,45 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Ventana fija
-     @Override
-     public void setLocation(int x, int y) {
-        // No hagas nada para evitar que el JInternalFrame se mueva
+    @Override
+    public void setLocation(int x, int y) {
+        // evitar que el JInternalFrame se mueva
     }
-     
+
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
         // Hacer invisible la ventana actual
         this.dispose(); //cerramos
         mainMenu.setVisible(true); //enseñar menu
     }//GEN-LAST:event_regresarActionPerformed
 
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        // Obtener el ID a buscar
+        String id = idABuscar.getText().trim();
+        try {
+            buscarPorId(id);
+        } catch (SQLException ex) {
+            // Manejar la excepción en caso de error SQL
+        }
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void botontablaCompletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontablaCompletaActionPerformed
+        // TODO add your handling code here:
+        try {
+            // Cargar la tabla completa
+            loadData();
+        } catch (SQLException ex) {
+            // Manejar la excepción en caso de error SQL
+        }
+    }//GEN-LAST:event_botontablaCompletaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botontablaCompleta;
     private javax.swing.JTable clientList;
     private javax.swing.JTextArea idABuscar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -236,7 +277,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         dtm.addColumn("NombreCliente");
         dtm.addColumn("Telefono");
         dtm.addColumn("Pais");
-         dtm.addColumn("CodigoEmpleadoRelacionado");
+        dtm.addColumn("CodigoEmpleadoRelacionado");
 
         //recorremos los países cargados en memoria
         for (int i = 0; i < allClientes.size(); i++) {
@@ -258,4 +299,45 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         //asociamos el modelo de datos creado a la JTable de la ventana, para hacer los datos visibles
         this.clientList.setModel(dtm);
     }
+
+    private void buscarPorId(String id) throws SQLException {
+        // Cargar todos los clientes
+        List<Cliente> allClientes = DataAccessManager.getInstance().loadAllClientes();
+
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Id");
+        dtm.addColumn("NombreCliente");
+        dtm.addColumn("Telefono");
+        dtm.addColumn("Pais");
+        dtm.addColumn("CodigoEmpleadoRelacionado");
+
+        // Convertir el ID ingresado a int
+        int idBuscado = Integer.parseInt(id);
+
+        boolean clienteEncontrado = false;
+
+        // Filtrar los clientes que coincidan con el ID buscado
+        for (Cliente cliente : allClientes) {
+            if (cliente.getCodigoCliente() == idBuscado) {
+                Object[] row = {
+                    cliente.getCodigoCliente(),
+                    cliente.getNombreCliente(),
+                    cliente.getTelefono(),
+                    cliente.getPais(),
+                    cliente.getCodigoClienteEmpleado()
+                };
+                dtm.addRow(row); // Agregar el cliente filtrado al modelo de tabla
+                clienteEncontrado = true;
+            }
+        }
+
+        // Si no se encontró ningún cliente, mostrar un mensaje de error
+        if (!clienteEncontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontró ningún cliente con el ID proporcionado", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Actualizar la tabla con los resultados de la búsqueda
+            clientList.setModel(dtm);
+        }
+    }
+
 }
