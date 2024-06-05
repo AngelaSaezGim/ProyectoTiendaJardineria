@@ -68,7 +68,7 @@ public class ClienteDAO extends DataAccessObject{
         return null;
     }
 
-    protected int deleteClient(String codigoCliente) throws SQLException {
+    protected int deleteClient(String codigoCliente) {
 
         int filasAfectadas = 0;
 
@@ -79,14 +79,14 @@ public class ClienteDAO extends DataAccessObject{
             // USAR executeUpdate();
             filasAfectadas = stmt.executeUpdate();
         }catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado al borrar el cliente" + e, "Error", JOptionPane.ERROR_MESSAGE);
+            e.getMessage();
         }
 
         // DEVUELVE LAS FILAS AFECTADAS por la eliminación
         return filasAfectadas;
     }
 
-    protected int insertClient(Cliente cliente) throws SQLException {
+    protected int insertClient(Cliente cliente) {
         
         int filasAfectadas = 0;
         
@@ -135,7 +135,7 @@ public class ClienteDAO extends DataAccessObject{
     }
 
     //Recibir cliente - un solo prepareStatenent
-    protected int updateClient(String codigoCliente, Cliente clienteActualizar) throws SQLException {
+    protected int updateClient(String codigoCliente, Cliente clienteActualizar) {
 
         int filasAfectadas = 0;
 
