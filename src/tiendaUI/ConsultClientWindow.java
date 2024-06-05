@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 import tiendaDataAccess.DataAccessManager;
 import tiendaObjetos.Cliente;
@@ -62,6 +63,15 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
 
         idABuscar.setEnabled(true);
         idABuscar.setEditable(true);
+
+        nombreABuscar.setEnabled(true);
+        nombreABuscar.setEditable(true);
+
+        paisABuscar.setEnabled(true);
+        paisABuscar.setEditable(true);
+        
+        empleadoABuscar.setEnabled(true);
+        empleadoABuscar.setEditable(true);
     }
 
     /**
@@ -83,13 +93,15 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         idABuscar = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         botonBuscar = new javax.swing.JButton();
-        botontablaCompleta = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         nombreABuscar = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         paisABuscar = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        empleadoABuscar = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -153,16 +165,10 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         jLabel1.setText("ID a buscar :");
 
         botonBuscar.setText("Buscar");
+        botonBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
-            }
-        });
-
-        botontablaCompleta.setText("Ver tabla completa");
-        botontablaCompleta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botontablaCompletaActionPerformed(evt);
             }
         });
 
@@ -184,44 +190,57 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         paisABuscar.setEnabled(false);
         jScrollPane4.setViewportView(paisABuscar);
 
+        empleadoABuscar.setColumns(1);
+        empleadoABuscar.setRows(1);
+        empleadoABuscar.setAutoscrolls(false);
+        empleadoABuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        empleadoABuscar.setEnabled(false);
+        jScrollPane5.setViewportView(empleadoABuscar);
+
+        jLabel4.setText("Empleado : ");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(botontablaCompleta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonBuscar)
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane5)
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botontablaCompleta)
-                        .addComponent(botonBuscar)))
-                .addContainerGap(137, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,7 +264,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
                 .addComponent(regresar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -268,34 +287,29 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
-        // Obtener el ID a buscar
-        String id = idABuscar.getText().trim();
+        String id = idABuscar.getText().trim(); //trim elimina los espacios en blanco
+        String nombre = nombreABuscar.getText().trim();
+        String pais = paisABuscar.getText().trim();
+        String idEmpleado = empleadoABuscar.getText().trim();
+
+        // BUSQUEDA SIMULATENEA
         try {
-            buscarPorId(id);
+            buscarClientes(id, nombre, pais, idEmpleado);
         } catch (SQLException ex) {
-            // Manejar la excepción en caso de error SQL
+            JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonBuscarActionPerformed
-
-    private void botontablaCompletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botontablaCompletaActionPerformed
-        // TODO add your handling code here:
-        try {
-            // Cargar la tabla completa
-            loadData();
-        } catch (SQLException ex) {
-            // Manejar la excepción en caso de error SQL
-        }
-    }//GEN-LAST:event_botontablaCompletaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBuscar;
-    private javax.swing.JButton botontablaCompleta;
     private javax.swing.JTable clientList;
+    private javax.swing.JTextArea empleadoABuscar;
     private javax.swing.JTextArea idABuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -303,6 +317,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea nombreABuscar;
     private javax.swing.JTextArea paisABuscar;
     private javax.swing.JButton regresar;
@@ -342,9 +357,57 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         this.clientList.setModel(dtm);
     }
 
-    private void buscarPorId(String id) throws SQLException {
-        // Cargar todos los clientes
+    private void buscarClientes(String id, String nombre, String pais, String idEmpleado) throws SQLException {
+        //Lista de todos los clientes cargados (a partir de LoadAll)
         List<Cliente> allClientes = DataAccessManager.getInstance().loadAllClientes();
+        // ArrayList de los clientes que se han filtrado
+        List<Cliente> clientesFiltrados = new ArrayList<>();
+
+        for (Cliente cliente : allClientes) {
+            boolean coincide = true;
+
+            if (!id.isEmpty()) {
+                try {
+                    int idBuscado = Integer.parseInt(id);
+                    coincide = coincide && (cliente.getCodigoCliente() == idBuscado);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "ID debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (!nombre.isEmpty()) {
+                coincide = coincide && cliente.getNombreCliente().equalsIgnoreCase(nombre);
+            }
+
+            if (!pais.isEmpty()) {
+                coincide = coincide && cliente.getPais().equalsIgnoreCase(pais);
+            }
+            if (!idEmpleado.isEmpty()) {
+                try {
+                    int idEmpleadoBuscado = Integer.parseInt(idEmpleado);
+                    coincide = coincide && (cliente.getCodigoClienteEmpleado() == idEmpleadoBuscado);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "ID empleado debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (coincide) {
+                clientesFiltrados.add(cliente);
+            }
+        }
+
+        actualizarTabla(clientesFiltrados);
+    }
+
+    // ACTUALIZA LA TABLA SEGÚN LOS CRITERIOS DE BUSQUEDA - por eso toma parametro la lista de clientes
+    private void actualizarTabla(List<Cliente> clientes) {
+
+        if (clientes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron clientes con los criterios proporcionados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return; // Salir del método sin actualizar la tabla
+        }
 
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Id");
@@ -353,33 +416,18 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         dtm.addColumn("Pais");
         dtm.addColumn("CodigoEmpleadoRelacionado");
 
-        // Convertir el ID ingresado a int
-        int idBuscado = Integer.parseInt(id);
-
-        boolean clienteEncontrado = false;
-
-        // Filtrar los clientes que coincidan con el ID buscado
-        for (Cliente cliente : allClientes) {
-            if (cliente.getCodigoCliente() == idBuscado) {
-                Object[] row = {
-                    cliente.getCodigoCliente(),
-                    cliente.getNombreCliente(),
-                    cliente.getTelefono(),
-                    cliente.getPais(),
-                    cliente.getCodigoClienteEmpleado()
-                };
-                dtm.addRow(row); // Agregar el cliente filtrado al modelo de tabla
-                clienteEncontrado = true;
-            }
+        for (Cliente cliente : clientes) {
+            Object[] row = {
+                cliente.getCodigoCliente(),
+                cliente.getNombreCliente(),
+                cliente.getTelefono(),
+                cliente.getPais(),
+                cliente.getCodigoClienteEmpleado()
+            };
+            dtm.addRow(row);
         }
 
-        // Si no se encontró ningún cliente, mostrar un mensaje de error
-        if (!clienteEncontrado) {
-            JOptionPane.showMessageDialog(this, "No se encontró ningún cliente con el ID proporcionado", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Actualizar la tabla con los resultados de la búsqueda
-            clientList.setModel(dtm);
-        }
+        this.clientList.setModel(dtm);
     }
 
 }
