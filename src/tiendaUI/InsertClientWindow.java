@@ -90,6 +90,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(950, 522));
 
         ingresarBoton.setText("Ingresar");
+        ingresarBoton.setPreferredSize(new java.awt.Dimension(80, 40));
         ingresarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresarBotonActionPerformed(evt);
@@ -97,6 +98,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         });
 
         borrarBoton.setText("Borrar");
+        borrarBoton.setPreferredSize(new java.awt.Dimension(80, 40));
         borrarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 borrarBotonActionPerformed(evt);
@@ -117,18 +119,32 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setText("Nombre del cliente");
+        jLabel1.setName(""); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel2.setText("Telefono del cliente");
+        jLabel2.setName(""); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel3.setText("Fax del cliente");
+        jLabel3.setName(""); // NOI18N
+        jLabel3.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel4.setText("Direccion del cliente");
+        jLabel4.setName(""); // NOI18N
+        jLabel4.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel5.setText("Ciudad del cliente");
+        jLabel5.setName(""); // NOI18N
+        jLabel5.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel6.setText("Pais del cliente");
+        jLabel6.setName(""); // NOI18N
+        jLabel6.setPreferredSize(new java.awt.Dimension(60, 60));
 
         jLabel7.setText("Codigo Empleado Relacionado al cliente");
+        jLabel7.setName(""); // NOI18N
+        jLabel7.setPreferredSize(new java.awt.Dimension(60, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,28 +157,30 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
                         .addComponent(regresarBoton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ingresarBoton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ingresarBoton)
-                                .addGap(18, 18, 18)
-                                .addComponent(borrarBoton)))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigoEmpleadoRelacionado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelefonoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFaxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLineaDireccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCiudadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPaisCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(510, Short.MAX_VALUE))
+                                .addGap(83, 83, 83)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCodigoEmpleadoRelacionado, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTelefonoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFaxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtLineaDireccionCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCiudadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPaisCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(borrarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(535, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +190,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,9 +217,9 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
                     .addComponent(txtCodigoEmpleadoRelacionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ingresarBoton)
-                    .addComponent(borrarBoton))
-                .addContainerGap(138, Short.MAX_VALUE))
+                    .addComponent(ingresarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(borrarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
@@ -215,49 +233,95 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
 
     private void ingresarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarBotonActionPerformed
 
+        DataAccessManager dataAccessManager = DataAccessManager.getInstance();
+        
         String nombreCliente = txtNombreCliente.getText();
         String telefonoCliente = txtTelefonoCliente.getText();
         String faxCliente = txtFaxCliente.getText();
         String lineaDireccionCliente = txtLineaDireccionCliente.getText();
         String ciudadCliente = txtCiudadCliente.getText();
         String paisCliente = txtPaisCliente.getText();
-        Short codigoEmpleadoRelacionado = Short.parseShort(txtCodigoEmpleadoRelacionado.getText());
+        String codigoEmpleadoRelacionado = txtCodigoEmpleadoRelacionado.getText();
 
-        if (nombreCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Nombre: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtNombreCliente.setBackground(Color.red);
-        } else if (telefonoCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Telefono: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtTelefonoCliente.setBackground(Color.red);
-        } else if (faxCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Fax: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtFaxCliente.setBackground(Color.red);
-        }else if (lineaDireccionCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Direccion: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtFaxCliente.setBackground(Color.red);
-        }else if (ciudadCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Ciudad: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtCiudadCliente.setBackground(Color.red);
-        }else if (paisCliente.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Pais: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtPaisCliente.setBackground(Color.red);
-        }else if (codigoEmpleadoRelacionado.toString().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debes llenar el campo Codigo Empleado Relacionado: ", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-            txtPaisCliente.setBackground(Color.red);
+        // Obtener el código de empleado relacionado como un short
+        // Validar que TODOS los campos campos NO ESTÉN vacíos
+        if (nombreCliente.isEmpty() || telefonoCliente.isEmpty() || faxCliente.isEmpty()
+                || lineaDireccionCliente.isEmpty() || ciudadCliente.isEmpty() || paisCliente.isEmpty() || txtCodigoEmpleadoRelacionado.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            if(nombreCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene el nombre del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if(telefonoCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene el telefono del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if(faxCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene el fax del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if(lineaDireccionCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene la direccion del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if(ciudadCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene la ciudad del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if(paisCliente.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Rellene el pais del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            if (codigoEmpleadoRelacionado.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Rellene el codigo Empleado del cliente ", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            }
+            return; // Salir del método si hay campos vacíos
         }
         
-        Cliente nuevoCliente = new Cliente(nombreCliente, telefonoCliente, faxCliente, lineaDireccionCliente, ciudadCliente, paisCliente, codigoEmpleadoRelacionado);
-        int filasAfectadas = 0; // = insertarCliente(nuevoCliente);
+        //pasar String CodigoEmpleadoRelacionado a Short (para pasarlo al objeto)
+        // Convertir el código del empleado relacionado a short
+        short codigoEmpleadoShort;
+        try {
+            codigoEmpleadoShort = Short.parseShort(codigoEmpleadoRelacionado);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El código de empleado relacionado debe ser un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si el código de empleado relacionado no es un número válido
+        }
 
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(null, "Datos insertados correctamente !!!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al guardar los datos", "Error", JOptionPane.ERROR_MESSAGE);
+        // Crear el objeto Cliente con los datos ingresados
+        Cliente nuevoCliente = new Cliente(nombreCliente, telefonoCliente, faxCliente, lineaDireccionCliente, ciudadCliente, paisCliente, codigoEmpleadoShort);
+        int filasAfectadas = 0;
+        
+        try {
+            // Insertar el nuevo cliente en la base de datos
+            filasAfectadas = dataAccessManager.insertarCliente(nuevoCliente);
+
+            if (filasAfectadas > 0) {
+                // Obtener el código de cliente generado automáticamente - (del objeto cliente)
+                int codigoClienteGenerado = nuevoCliente.getCodigoCliente();
+
+                JOptionPane.showMessageDialog(null, "Datos insertados correctamente !!! Código de cliente: " + codigoClienteGenerado);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar los datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.getMessage();
         }
     }//GEN-LAST:event_ingresarBotonActionPerformed
 
     private void borrarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarBotonActionPerformed
         // TODO add your handling code here:
+        // Limpiar todos los campos de texto
+        txtNombreCliente.setText("");
+        txtTelefonoCliente.setText("");
+        txtFaxCliente.setText("");
+        txtLineaDireccionCliente.setText("");
+        txtCiudadCliente.setText("");
+        txtPaisCliente.setText("");
+        txtCodigoEmpleadoRelacionado.setText("");
+
+        // Restaurar el color de fondo de los campos de texto
+        txtNombreCliente.setBackground(Color.white);
+        txtTelefonoCliente.setBackground(Color.white);
+        txtFaxCliente.setBackground(Color.white);
+        txtLineaDireccionCliente.setBackground(Color.white);
+        txtCiudadCliente.setBackground(Color.white);
+        txtPaisCliente.setBackground(Color.white);
+        txtCodigoEmpleadoRelacionado.setBackground(Color.white);
     }//GEN-LAST:event_borrarBotonActionPerformed
 
     private void txtCiudadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadClienteActionPerformed

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.List;
 import java.util.Properties;
+import java.util.ArrayList;
 
 import static tiendaDataAccess.Constants.*;
 import tiendaObjetos.Empleado;
@@ -223,5 +224,15 @@ public class DataAccessManager implements AutoCloseable {
         }
         return this.clientesDAO.updateClient(codigoCliente, clienteActualizar);
     }
+    
+    // Lista con los codigos de clientes
+    public List<String> obtenerCodigosClientes() throws SQLException {
+    List<Cliente> clientes = loadAllClientes();
+    List<String> codigosClientes = new ArrayList<>();
+    for (Cliente cliente : clientes) {
+        codigosClientes.add(Integer.toString(cliente.getCodigoCliente()));
+    }
+    return codigosClientes;
+}
 
 }
