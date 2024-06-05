@@ -63,11 +63,12 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         this.clientList.setRowSelectionAllowed(false);
         this.clientList.setColumnSelectionAllowed(false);
 
+        // No lo escribumos - lo seleccionamos desde la tabla (donde estemos es donde estará)
         txtIdClienteActualizar.setEnabled(false);
         txtIdClienteActualizar.setEditable(false);
 
         // Listener para la tabla que detecta la selección de fila - seleccionar en tabla
-        clientList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+         clientList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     int selectedRow = clientList.getSelectedRow();
@@ -133,17 +134,19 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
 
         clientList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdCliente", "Nombre", "Telefono", "Pais", "Cod. Empleado"
             }
         ));
         clientList.setToolTipText("");
+        clientList.setMinimumSize(new java.awt.Dimension(60, 40));
         clientList.setPreferredSize(new java.awt.Dimension(500, 700));
+        clientList.setRowHeight(21);
         jScrollPane1.setViewportView(clientList);
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 204));
@@ -211,7 +214,6 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         });
 
         seleccionarCodigoClienteAactualizar.setText("Seleccionar");
-        seleccionarCodigoClienteAactualizar.setActionCommand("Seleccionar");
         seleccionarCodigoClienteAactualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seleccionarCodigoClienteAactualizarActionPerformed(evt);
@@ -341,10 +343,13 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         try {
             clienteActualizar = dataAccessManager.loadClientesByCode(idClienteAactualizar);
             filasAfectadas = dataAccessManager.updateClient(idClienteAactualizar, clienteActualizar);
+            if(filasAfectadas>0){
             JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            loadData(); // Refresca la tabla después de la actualización
+            loadData(); // Refresca la tabla después de la actualización}
+            } else{
+                JOptionPane.showMessageDialog(this, "Error al actualizar el cliente, no se actualizó nada: ", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar el cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_actualizarActionPerformed
@@ -356,69 +361,61 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         txtNuevoTelefonoCliente.setText("");
         txtNuevoPaisCliente.setText("");
         txtNuevoCodigoEmpleadoVinculado.setText("");
-        desbloquearSeleccion();
+        
+        txtNuevoNombreCliente.setEnabled(false);
+        txtNuevoTelefonoCliente.setEnabled(false);
+        txtNuevoPaisCliente.setEnabled(false);
+        txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
+
+        clientList.clearSelection();
     }//GEN-LAST:event_borrarActionPerformed
 
     private void seleccionarCodigoClienteAactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarCodigoClienteAactualizarActionPerformed
         // TODO add your handling code here:
         //Seleccionar codgio cliente a actualizar
-        int selectedRow = clientList.getSelectedRow();
-        if (selectedRow != -1) {
-            String codigoCliente = clientList.getValueAt(selectedRow, 0).toString();
-            txtIdClienteActualizar.setText(codigoCliente);
+        if (clientList.getSelectedRow() != -1) {
+            JOptionPane.showMessageDialog(this, "Se selecciono el cliente " + txtIdClienteActualizar.getText());JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar.");
+            txtNuevoNombreCliente.setEnabled(true);
+            txtNuevoTelefonoCliente.setEnabled(true);
+            txtNuevoPaisCliente.setEnabled(true);
+            txtNuevoCodigoEmpleadoVinculado.setEnabled(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar. (Seleccione algún campo y haga clic en 'Seleccionar')");
         }
     }//GEN-LAST:event_seleccionarCodigoClienteAactualizarActionPerformed
 
     private void loadData() throws SQLException {
 
         DataAccessManager dataAccessManager = DataAccessManager.getInstance();
-
         List<Cliente> clients = dataAccessManager.loadAllClientes();
-        DefaultTableModel model = (DefaultTableModel) clientList.getModel();
-        model.setRowCount(0);
+
+        // modelo existente para evitar agregar columnas repetidas
+        DefaultTableModel dtm = (DefaultTableModel) clientList.getModel();
+
+        // Limpiar
+        dtm.setRowCount(0);
+
+        // Asegurarse de que las columnas no se dupliquen
+        if (dtm.getColumnCount() == 0) {
+            dtm.addColumn("Id");
+            dtm.addColumn("NombreCliente");
+            dtm.addColumn("Telefono");
+            dtm.addColumn("Pais");
+            dtm.addColumn("CodigoEmpleadoRelacionado");
+        }
+
+        // Añadir las filas de datos
         for (Cliente cliente : clients) {
-            model.addRow(new Object[]{cliente.getCodigoCliente(), cliente.getNombreCliente(), cliente.getTelefono(), cliente.getPais()});
+            dtm.addRow(new Object[]{
+                cliente.getCodigoCliente(),
+                cliente.getNombreCliente(),
+                cliente.getTelefono(),
+                cliente.getPais(),
+                cliente.getCodigoClienteEmpleado()
+            });
         }
     }
 
-    // Método para bloquear el campo txtIdClienteActualizar después de buscar
-    private void bloquearSeleccion() {
-        txtIdClienteActualizar.setEnabled(false);
-    }
-
-// Método para desbloquear el campo txtIdClienteActualizar después de borrar
-    private void desbloquearSeleccion() {
-        txtIdClienteActualizar.setEnabled(true);
-        txtIdClienteActualizar.setText("");
-    }
-
-    // Método para actualizar la información del cliente
-    private void actualizarCliente(String codigoCliente) {
-        try {
-            Cliente cliente = DataAccessManager.getInstance().loadClientesByCode(codigoCliente);
-
-            if (cliente != null) {
-                txtNuevoNombreCliente.setText(cliente.getNombreCliente());
-                txtNuevoTelefonoCliente.setText(cliente.getTelefono());
-                txtNuevoPaisCliente.setText(cliente.getPais());
-                txtNuevoCodigoEmpleadoVinculado.setText(String.valueOf(cliente.getCodigoClienteEmpleado()));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    // Listener para el botón "Buscar"
-    private void buscarCodigoClienteAactualizarActionPerformed(java.awt.event.ActionEvent evt) {
-        String codigoClienteSeleccionado = (String) txtIdClienteActualizar.getSelectedText();
-        if (codigoClienteSeleccionado != null) {
-            JOptionPane.showMessageDialog(this, "Cliente seleccionado para actualizar: " + codigoClienteSeleccionado);
-            bloquearSeleccion();
-            actualizarCliente(codigoClienteSeleccionado);
-        }
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

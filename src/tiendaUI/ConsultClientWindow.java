@@ -333,7 +333,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         dtm.addColumn("Pais");
         dtm.addColumn("CodigoEmpleadoRelacionado");
 
-        //recorremos los países cargados en memoria
+        //recorremos los clientes cargados en memoria
         for (int i = 0; i < allClientes.size(); i++) {
             //una fila por cliente
             Object[] dtmRow = new Object[5];
