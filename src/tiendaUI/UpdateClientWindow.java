@@ -68,7 +68,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         txtIdClienteActualizar.setEditable(false);
 
         // Listener para la tabla que detecta la selección de fila - seleccionar en tabla
-         clientList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        clientList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     int selectedRow = clientList.getSelectedRow();
@@ -145,6 +145,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         ));
         clientList.setToolTipText("");
         clientList.setMinimumSize(new java.awt.Dimension(60, 40));
+        clientList.setName(""); // NOI18N
         clientList.setPreferredSize(new java.awt.Dimension(500, 700));
         clientList.setRowHeight(21);
         jScrollPane1.setViewportView(clientList);
@@ -179,6 +180,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         txtNuevoTelefonoCliente.setRows(1);
         txtNuevoTelefonoCliente.setAutoscrolls(false);
         txtNuevoTelefonoCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtNuevoTelefonoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtNuevoTelefonoCliente.setEnabled(false);
         jScrollPane4.setViewportView(txtNuevoTelefonoCliente);
 
@@ -232,30 +234,6 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(17, 17, 17)
-                            .addComponent(jScrollPane3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(14, 14, 14)
-                            .addComponent(jScrollPane4))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane5))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(273, 273, 273)
-                        .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(193, 501, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -278,6 +256,30 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
                                 .addComponent(actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(17, 17, 17)
+                            .addComponent(jScrollPane3))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(14, 14, 14)
+                            .addComponent(jScrollPane4))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane5))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(218, 501, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,23 +336,45 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         String nuevoTelefonoCliente = txtNuevoTelefonoCliente.getText();
         String paisCliente = txtNuevoPaisCliente.getText();
         String codigoEmpleadoRelacionado = txtNuevoCodigoEmpleadoVinculado.getText();
-        
+
         Cliente clienteActualizar;
 
-        // Carga el cliente actual desde la base de datos
+        int filasAfectadas = 0;
+        short codigoEmpleadoShort;
 
-        int filasAfectadas=0;
         try {
+            // Carga el cliente actual desde la base de datos con la id que tenemos
             clienteActualizar = dataAccessManager.loadClientesByCode(idClienteAactualizar);
+            // Actualiza el cliente con los nuevos valores - si hay
+            if (!nuevoNombreCliente.isEmpty()) {
+                clienteActualizar.setNombreCliente(nuevoNombreCliente);
+            }
+            if (!nuevoNombreCliente.isEmpty()) {
+                clienteActualizar.setTelefono(nuevoTelefonoCliente);
+            }
+            if (!nuevoNombreCliente.isEmpty()) {
+                clienteActualizar.setPais(paisCliente);
+            }
+            if (!nuevoNombreCliente.isEmpty()) {
+                try {
+
+                    codigoEmpleadoShort = Short.parseShort(codigoEmpleadoRelacionado);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "El código de empleado relacionado debe ser un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Salir del método si el código de empleado relacionado no es un número válido
+                }
+                clienteActualizar.setCodigoClienteEmpleado(codigoEmpleadoShort);
+            }
+
             filasAfectadas = dataAccessManager.updateClient(idClienteAactualizar, clienteActualizar);
-            if(filasAfectadas>0){
-            JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            loadData(); // Refresca la tabla después de la actualización}
-            } else{
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                loadData(); // Refresca la tabla después de la actualización}
+            } else {
                 JOptionPane.showMessageDialog(this, "Error al actualizar el cliente, no se actualizó nada: ", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al actualizar el cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_actualizarActionPerformed
 
@@ -361,11 +385,6 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         txtNuevoTelefonoCliente.setText("");
         txtNuevoPaisCliente.setText("");
         txtNuevoCodigoEmpleadoVinculado.setText("");
-        
-        txtNuevoNombreCliente.setEnabled(false);
-        txtNuevoTelefonoCliente.setEnabled(false);
-        txtNuevoPaisCliente.setEnabled(false);
-        txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
 
         clientList.clearSelection();
     }//GEN-LAST:event_borrarActionPerformed
@@ -374,13 +393,13 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //Seleccionar codgio cliente a actualizar
         if (clientList.getSelectedRow() != -1) {
-            JOptionPane.showMessageDialog(this, "Se selecciono el cliente " + txtIdClienteActualizar.getText());JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar.");
+            JOptionPane.showMessageDialog(this, "Se selecciono el cliente " + txtIdClienteActualizar.getText());
             txtNuevoNombreCliente.setEnabled(true);
             txtNuevoTelefonoCliente.setEnabled(true);
             txtNuevoPaisCliente.setEnabled(true);
             txtNuevoCodigoEmpleadoVinculado.setEnabled(true);
         } else {
-             JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar. (Seleccione algún campo y haga clic en 'Seleccionar')");
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente de la lista para actualizar. (Seleccione algún campo y haga clic en 'Seleccionar')");
         }
     }//GEN-LAST:event_seleccionarCodigoClienteAactualizarActionPerformed
 
@@ -415,7 +434,6 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
             });
         }
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
