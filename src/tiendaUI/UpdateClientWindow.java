@@ -82,9 +82,10 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         });
         
         txtNuevoNombreCliente.setEnabled(false);
-            txtNuevoTelefonoCliente.setEnabled(false);
-            txtNuevoPaisCliente.setEnabled(false);
-            txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
+        txtNuevoTelefonoCliente.setEnabled(false);
+        txtNuevoPaisCliente.setEnabled(false);
+        txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
+
     }
 
     /**
@@ -400,6 +401,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //Seleccionar codgio cliente a actualizar
         if (clientList.getSelectedRow() != -1) {
+            txtIdClienteActualizar.setText(clientList.getValueAt(clientList.getSelectedRow(), 0).toString());
             JOptionPane.showMessageDialog(this, "Se selecciono el cliente " + txtIdClienteActualizar.getText());
             // se activan los campos para poder escribir
             txtNuevoNombreCliente.setEnabled(true);
@@ -441,6 +443,9 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
                 cliente.getCodigoClienteEmpleado()
             });
         }
+
+        // Notificar a la tabla que el modelo ha cambiado
+        dtm.fireTableDataChanged();
     }
 
 
