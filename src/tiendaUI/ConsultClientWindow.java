@@ -284,7 +284,6 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
         String id = idABuscar.getText().trim(); //trim elimina los espacios en blanco
         String nombre = nombreABuscar.getText().trim();
         String pais = paisABuscar.getText().trim();
@@ -334,13 +333,12 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         dtm.addColumn("Pais");
         dtm.addColumn("CodigoEmpleadoRelacionado");
 
-        //recorremos los clientes cargados en memoria
+        //recorremos los clientes
         for (int i = 0; i < allClientes.size(); i++) {
             //una fila por cliente
             Object[] dtmRow = new Object[5];
             Cliente cliente = allClientes.get(i);
 
-            //las dos columnas de la fila, son dos propiedades del país, respectivamente
             dtmRow[0] = cliente.getCodigoCliente();
             dtmRow[1] = cliente.getNombreCliente();
             dtmRow[2] = cliente.getTelefono();
@@ -364,7 +362,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         List<Cliente> clientesFiltrados = new ArrayList<>();
 
         for (Cliente cliente : allClientes) {
-            boolean coincide = true;
+            boolean coincide = true; //boleean para controlar si coincide
 
             if (!id.isEmpty()) {
                 try {
@@ -375,7 +373,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
                     return;
                 }
             }
-
+            //da igual que haya algunos vacios - buscará el textarea que este rellenado y luego irá filtrando
             if (!nombre.isEmpty()) {
                 coincide = coincide && cliente.getNombreCliente().equalsIgnoreCase(nombre);
             }
@@ -397,7 +395,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
                 clientesFiltrados.add(cliente);
             }
         }
-
+        // la tabla se actualiza y muestra lo que ha encontrado
         actualizarTabla(clientesFiltrados);
     }
 
@@ -408,7 +406,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se encontraron clientes con los criterios proporcionados.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return; // Salir del método sin actualizar la tabla
         }
-
+        //creamos la tabla pero con SOLO esos clientes filtrados.
         DefaultTableModel dtm = new NotEditableTableModel();
         dtm.addColumn("Id");
         dtm.addColumn("NombreCliente");
