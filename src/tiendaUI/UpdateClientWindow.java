@@ -63,7 +63,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         this.clientList.setRowSelectionAllowed(false);
         this.clientList.setColumnSelectionAllowed(false);
 
-        // No lo escribumos - lo seleccionamos desde la tabla (donde estemos es donde estará)
+        // No lo escribumos - lo seleccionamos desde la tabla (donde le demos al campo es donde estará)
         txtIdClienteActualizar.setEnabled(false);
         txtIdClienteActualizar.setEditable(false);
 
@@ -74,11 +74,17 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
                     int selectedRow = clientList.getSelectedRow();
                     if (selectedRow != -1) {
                         String codigoCliente = clientList.getValueAt(selectedRow, 0).toString();
+                         //Si se selecciona un campo - pone el id en el textarea de id
                         txtIdClienteActualizar.setText(codigoCliente);
                     }
                 }
             }
         });
+        
+        txtNuevoNombreCliente.setEnabled(false);
+            txtNuevoTelefonoCliente.setEnabled(false);
+            txtNuevoPaisCliente.setEnabled(false);
+            txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
     }
 
     /**
@@ -91,7 +97,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
     // Ventana fija
     @Override
     public void setLocation(int x, int y) {
-        // No hagas nada para evitar que el JInternalFrame se mueva
+        // Nada para evitar que el frame se mueva y hacer que se mantenga en posición fija
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -337,6 +343,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         String paisCliente = txtNuevoPaisCliente.getText();
         String codigoEmpleadoRelacionado = txtNuevoCodigoEmpleadoVinculado.getText();
 
+        //Objeto clienteAactualizar (lo creamos desde aquí y lo pasamos al update)
         Cliente clienteActualizar;
 
         int filasAfectadas = 0;
@@ -345,17 +352,17 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         try {
             // Carga el cliente actual desde la base de datos con la id que tenemos
             clienteActualizar = dataAccessManager.loadClientesByCode(idClienteAactualizar);
-            // Actualiza el cliente con los nuevos valores - si hay
+            // Actualiza el cliente con los nuevos valores - SI HEMOS RELLENADO (si no se deja como está)
             if (!nuevoNombreCliente.isEmpty()) {
                 clienteActualizar.setNombreCliente(nuevoNombreCliente);
             }
-            if (!nuevoNombreCliente.isEmpty()) {
+            if (!nuevoTelefonoCliente.isEmpty()) {
                 clienteActualizar.setTelefono(nuevoTelefonoCliente);
             }
-            if (!nuevoNombreCliente.isEmpty()) {
+            if (!paisCliente.isEmpty()) {
                 clienteActualizar.setPais(paisCliente);
             }
-            if (!nuevoNombreCliente.isEmpty()) {
+            if (!codigoEmpleadoRelacionado.isEmpty()) {
                 try {
 
                     codigoEmpleadoShort = Short.parseShort(codigoEmpleadoRelacionado);
@@ -394,6 +401,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         //Seleccionar codgio cliente a actualizar
         if (clientList.getSelectedRow() != -1) {
             JOptionPane.showMessageDialog(this, "Se selecciono el cliente " + txtIdClienteActualizar.getText());
+            // se activan los campos para poder escribir
             txtNuevoNombreCliente.setEnabled(true);
             txtNuevoTelefonoCliente.setEnabled(true);
             txtNuevoPaisCliente.setEnabled(true);

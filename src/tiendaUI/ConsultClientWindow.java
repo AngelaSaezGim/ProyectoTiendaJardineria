@@ -61,6 +61,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
         this.clientList.setRowSelectionAllowed(false);
         this.clientList.setColumnSelectionAllowed(false);
 
+        // Hacemos la busqueda editable (se puede escribir)
         idABuscar.setEnabled(true);
         idABuscar.setEditable(true);
 

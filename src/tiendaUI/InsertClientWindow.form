@@ -161,9 +161,6 @@
     <Component class="javax.swing.JTextField" name="txtLineaDireccionCliente">
     </Component>
     <Component class="javax.swing.JTextField" name="txtCiudadCliente">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCiudadClienteActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPaisCliente">
     </Component>

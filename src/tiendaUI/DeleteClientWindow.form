@@ -53,7 +53,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="regresarButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="eliminarBoton" min="-2" max="-2" attributes="0"/>
@@ -107,6 +107,7 @@
     <Component class="javax.swing.JButton" name="eliminarBoton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Pulsa Aqu&#xed; Para Eliminar Cliente Seleccionado"/>
+        <Property name="actionCommand" type="java.lang.String" value="Pulsa Aqu&#xed; Para Eliminar Clientes Seleccionados"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarBotonActionPerformed"/>

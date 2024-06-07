@@ -76,7 +76,7 @@ public class DeleteClientWindow extends javax.swing.JInternalFrame {
     // Ventana fija
     @Override
     public void setLocation(int x, int y) {
-        // No hagas nada para evitar que el JInternalFrame se mueva
+        // Nada para evitar que el frame se mueva y hacer que se mantenga en posición fija
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -116,6 +116,7 @@ public class DeleteClientWindow extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(clientList);
 
         eliminarBoton.setText("Pulsa Aquí Para Eliminar Cliente Seleccionado");
+        eliminarBoton.setActionCommand("Pulsa Aquí Para Eliminar Clientes Seleccionados");
         eliminarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarBotonActionPerformed(evt);
@@ -144,7 +145,7 @@ public class DeleteClientWindow extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(regresarButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(eliminarBoton)
@@ -163,36 +164,42 @@ public class DeleteClientWindow extends javax.swing.JInternalFrame {
 
     private void eliminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBotonActionPerformed
         // TODO add your handling code here:
-        int rowCount = clientList.getRowCount();
+        int rowCount = clientList.getRowCount(); //contamos las filas (para el iterador)
         //clientes a borrar (listas de id)
         List<String> idsToDelete = new ArrayList<>();
 
-        //ARREGLAR
         for (int i = 0; i < rowCount; i++) {
         Boolean isSelected = (Boolean) clientList.getValueAt(i, 0); // La primera columna es el checkbox -- contamos por ahi
+        // saber a quien tenemos que borrar y a quien no
         //si esta Seleccionado=lo añadimos a la LISTA de ids a borrar
         if (isSelected != null && isSelected) {
-            String id = (String) clientList.getValueAt(i, 1); // La segunda columna es el ID del cliente (cogemos esO
-            idsToDelete.add(id);
+            Object idObj = clientList.getValueAt(i, 1); // La segunda columna es el ID del cliente (cogemos eso)
+            String id = idObj.toString(); // CONVERTIMOS ID (que es INT) a STRING (para añadirlo a la lista)
+            idsToDelete.add(id); //lista de ids a borrar
         }
     }
-
+     // Si no se ha seleccionado nada y le damos al botón, saldrá un mensaje así
     if (idsToDelete.isEmpty()) {
         JOptionPane.showMessageDialog(this, "No se ha seleccionado ningún cliente para eliminar.", "Información", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
-
+    // mensaje de confirmación de borrado con showConfirmDialog
     int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar los clientes seleccionados?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+    //eliminamos=
     if (confirm == JOptionPane.YES_OPTION) {
         int totalFilasEliminadas = 0;
+        //iteramos en la lista de ids a Borrar
         for (String id : idsToDelete) {
             try {
+                //por cada id, aplicamos el delete del accessManager
                 int filasEliminadas = DataAccessManager.getInstance().deleteClient(id);
+                //vamos sumando filas o clientes que hemos eliminado
                 totalFilasEliminadas += filasEliminadas;
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Error al eliminar cliente con ID: " + id + "\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //nos notifica que se eliminaron clientes y cuantos se eliminaron
         JOptionPane.showMessageDialog(this, "Clientes eliminados: " + totalFilasEliminadas, "Información", JOptionPane.INFORMATION_MESSAGE);
         try {
             loadData(); // Recargar la tabla después de eliminar

@@ -4,15 +4,11 @@
  */
 package tiendaUI;
 
-import java.awt.Color;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import tiendaAppUI.TiendaUIApp;
 
 import tiendaDataAccess.DataAccessManager;
 import tiendaObjetos.Cliente;
@@ -63,7 +59,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
     // Ventana fija
      @Override
      public void setLocation(int x, int y) {
-        // No hagas nada para evitar que el JInternalFrame se mueva
+        // Nada para evitar que el frame se mueva y hacer que se mantenga en posición fija
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -109,12 +105,6 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         regresarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarBotonActionPerformed(evt);
-            }
-        });
-
-        txtCiudadCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCiudadClienteActionPerformed(evt);
             }
         });
 
@@ -314,19 +304,7 @@ public class InsertClientWindow extends javax.swing.JInternalFrame {
         txtPaisCliente.setText("");
         txtCodigoEmpleadoRelacionado.setText("");
 
-        // Restaurar el color de fondo de los campos de texto
-        txtNombreCliente.setBackground(Color.white);
-        txtTelefonoCliente.setBackground(Color.white);
-        txtFaxCliente.setBackground(Color.white);
-        txtLineaDireccionCliente.setBackground(Color.white);
-        txtCiudadCliente.setBackground(Color.white);
-        txtPaisCliente.setBackground(Color.white);
-        txtCodigoEmpleadoRelacionado.setBackground(Color.white);
     }//GEN-LAST:event_borrarBotonActionPerformed
-
-    private void txtCiudadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCiudadClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
