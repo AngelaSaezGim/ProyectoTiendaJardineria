@@ -138,6 +138,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane1.setToolTipText("");
+        jScrollPane1.setAlignmentY(1.0F);
 
         clientList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,9 +152,10 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
             }
         ));
         clientList.setToolTipText("");
-        clientList.setMinimumSize(new java.awt.Dimension(60, 40));
+        clientList.setMaximumSize(new java.awt.Dimension(2147483647, 100));
+        clientList.setMinimumSize(new java.awt.Dimension(60, 100));
         clientList.setName(""); // NOI18N
-        clientList.setPreferredSize(new java.awt.Dimension(500, 700));
+        clientList.setPreferredSize(null);
         clientList.setRowHeight(21);
         jScrollPane1.setViewportView(clientList);
 
@@ -423,15 +425,6 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
 
         // Limpiar
         dtm.setRowCount(0);
-
-        // Asegurarse de que las columnas no se dupliquen
-        if (dtm.getColumnCount() == 0) {
-            dtm.addColumn("Id");
-            dtm.addColumn("NombreCliente");
-            dtm.addColumn("Telefono");
-            dtm.addColumn("Pais");
-            dtm.addColumn("CodigoEmpleadoRelacionado");
-        }
 
         // Añadir las filas de datos
         for (Cliente cliente : clients) {
