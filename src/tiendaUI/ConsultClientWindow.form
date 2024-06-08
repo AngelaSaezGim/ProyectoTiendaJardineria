@@ -160,7 +160,7 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[500, 700]"/>
+              <Dimension value="null"/>
             </Property>
           </Properties>
         </Component>

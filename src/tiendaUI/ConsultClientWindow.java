@@ -153,7 +153,7 @@ public final class ConsultClientWindow extends javax.swing.JInternalFrame {
             }
         ));
         clientList.setToolTipText("");
-        clientList.setPreferredSize(new java.awt.Dimension(500, 700));
+        clientList.setPreferredSize(null);
         jScrollPane1.setViewportView(clientList);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

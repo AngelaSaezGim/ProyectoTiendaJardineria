@@ -85,7 +85,7 @@ public class UpdateClientWindow extends javax.swing.JInternalFrame {
         txtNuevoTelefonoCliente.setEnabled(false);
         txtNuevoPaisCliente.setEnabled(false);
         txtNuevoCodigoEmpleadoVinculado.setEnabled(false);
-
+       
     }
 
     /**
