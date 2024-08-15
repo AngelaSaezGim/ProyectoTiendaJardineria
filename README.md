@@ -1,9 +1,17 @@
-TIENDA JARDINERIA
+# Tienda Jardineria CRUD
 
 Almacen de una tienda de Jardineria 
 
 Gestionando entidades - Cliente, Empleados y Productos - CRUD
 
-Uso JAVA, SWING y SQL 
 
-Base de datos -> Jardinería (descargala en resources)
+USO;
+
+-> Java
+
+-> SWING
+
+-> SQL
+
+
+Base de datos -> Jardinería *(descargala en resources) *
